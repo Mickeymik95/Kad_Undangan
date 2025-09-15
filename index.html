@@ -1,308 +1,226 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kad Jemputan Kahwin</title>
-  <style>
-    body {
-  margin: 0;
-  font-family: 'Georgia', serif;
-  background: #e6f2ff;  /* biru lembut */
-  color: #2c3e50;
-  text-align: center;
-  overflow-x: hidden;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kad Jemputan Kahwin Premium</title>
+<style>
+/* BODY & BACKGROUND */
+body {
+  margin:0;
+  font-family:'Georgia', serif;
+  background:#e6f2ff;
+  overflow-x:hidden;
+  text-align:center;
+  position:relative;
+  color:#1e3a5f;
 }
 
-   .overlay {
-  background: rgba(255, 255, 255, 0.3); /* putih separa lutsinar */
-  backdrop-filter: blur(10px);          /* beri kesan kabur di belakang */
-  min-height: 100vh;
-  padding: 30px 20px;
-  position: relative;
-  z-index: 2;
-  border-radius: 20px;                  /* sudut lembut */
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* bayang halus */
+/* OVERLAY */
+.overlay {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(12px);
+  min-height:100vh;
+  padding:40px 20px;
+  border-radius:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.1);
+  position:relative;
+  z-index:2;
 }
 
-    h1 {
-      letter-spacing: 3px;
-      font-size: 22px;
-      margin-bottom: 15px;
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: all 1s ease;
-    }
+/* HEADER & NAMA */
+h1, .initials, .names, .date, .countdown {
+  opacity:0;
+  transform:translateY(30px);
+  transition: all 1s ease;
+}
+h1 { font-size:28px; margin-bottom:20px; letter-spacing:3px; }
+.initials { font-size:100px; font-weight:bold; margin:10px 0; background:linear-gradient(90deg,#f4c542,#fff); -webkit-background-clip:text; color:transparent; animation: shimmer 2s infinite; }
+.names { font-size:30px; margin:5px 0 20px; }
+.date, .countdown { font-size:18px; margin:10px 0; font-weight:bold; }
 
-    .initials {
-      font-size: 80px;
-      font-weight: bold;
-      color: #1e3a5f;
-      margin: 10px 0;
-      opacity: 0;
-      transform: scale(0.8);
-      transition: all 1.2s ease;
-    }
+/* SHIMMER EFFECT */
+@keyframes shimmer{
+  0%{background-position:-200px 0;}
+  100%{background-position:200px 0;}
+}
 
-    .names {
-      font-size: 24px;
-      margin: 5px 0 20px;
-      color: #1e3a5f;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 1.2s ease;
-    }
+/* SHOW CLASS */
+.show{ opacity:1; transform:translateY(0); }
 
-    .date, .time-place, section, .countdown {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 1.2s ease;
-    }
+/* SECTION */
+section{
+  margin:40px 0;
+  padding:20px;
+  background: rgba(255,255,255,0.3);
+  border-radius:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  opacity:0;
+  transform:translateY(20px);
+  transition: all 1s ease;
+}
 
-    .countdown {
-      font-size: 18px;
-      font-weight: bold;
-      color: #1e3a5f;
-      margin: 20px 0 40px;
-    }
+/* UL LIST */
+ul { list-style:none; padding:0; font-size:16px; line-height:1.8; max-width:400px; margin:0 auto; text-align:left; }
 
-    section {
-      margin: 40px 0;
-    }
+/* AUDIO */
+audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
 
-    iframe {
-      width: 100%;
-      height: 300px;
-      border: none;
-      border-radius: 10px;
-    }
+/* DOA */
+.doa {
+  margin-top:40px; padding:25px; background: rgba(255,255,255,0.3);
+  border-radius:20px; font-style:italic; font-size:18px; line-height:1.8; color:#1e3a5f;
+  border:2px solid rgba(30,58,95,0.2); backdrop-filter:blur(5px);
+  opacity:0; transform:translateY(20px); transition: all 1s ease;
+}
 
-    ul {
-      list-style: none;
-      padding: 0;
-      font-size: 16px;
-      line-height: 1.8;
-    }
+/* KELOPAK BUNGA + GLITTER */
+.petal {
+  position: fixed;
+  top: -10vh;
+  background-image: url('petal.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width:35px; height:35px;
+  opacity:0.9;
+  z-index:1;
+  animation: fall linear infinite, glitter 1.5s ease-in-out infinite alternate;
+}
+@keyframes fall{
+  0%{transform:translateY(-10vh) rotate(0deg); opacity:1;}
+  100%{transform:translateY(110vh) rotate(360deg); opacity:0.3;}
+}
+@keyframes glitter{
+  0%{ box-shadow:0 0 0px rgba(255,255,255,0);}
+  50%{ box-shadow:0 0 10px rgba(255,255,255,0.6);}
+  100%{ box-shadow:0 0 0px rgba(255,255,255,0);}
+}
 
-    audio {
-      margin-top: 20px;
-      width: 100%;
-      max-width: 350px;
-    }
-
-    /* Doa Pengantin dengan hiasan */
-    .doa {
-      margin-top: 40px;
-      padding: 25px;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 20px;
-      font-style: italic;
-      font-size: 18px;
-      line-height: 1.8;
-      color: #1e3a5f;
-      position: relative;
-      border: 4px solid transparent;
-      background-clip: padding-box;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-
-    .doa h2 {
-      margin-bottom: 15px;
-      font-size: 20px;
-      color: #2c3e50;
-    }
-
-    /* Ornamen hiasan di sudut */
-    .doa::before, .doa::after {
-      content: "";
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      background: url('ornament.png') no-repeat center;
-      background-size: contain;
-    }
-    .doa::before {
-      top: -20px;
-      left: -20px;
-    }
-    .doa::after {
-      bottom: -20px;
-      right: -20px;
-      transform: rotate(180deg);
-    }
-
-    /* Kelas aktif bila muncul */
-    .show {
-      opacity: 1 !important;
-      transform: translateY(0) scale(1) !important;
-    }
-
-    /* 🌐 MEDIA QUERY UNTUK RESPONSIVE */
-    @media (max-width: 768px) {
-      h1 { font-size: 18px; }
-      .initials { font-size: 60px; }
-      .names { font-size: 20px; }
-      .countdown { font-size: 16px; }
-      ul { font-size: 14px; }
-      .doa { font-size: 16px; padding: 15px; }
-      .doa::before, .doa::after { width: 40px; height: 40px; }
-    }
-
-    @media (max-width: 480px) {
-      .initials { font-size: 45px; }
-      .names { font-size: 18px; }
-      .date, .time-place { font-size: 14px; }
-      iframe { height: 200px; }
-      .doa { font-size: 14px; }
-    }
-
-    /* 🌸 ANIMASI BUNGA JATUH */
-    .petal {
-      position: fixed;
-      top: -10vh;
-      background-image: url('petal.png'); /* kelopak bunga png transparent */
-      background-size: contain;
-      background-repeat: no-repeat;
-      width: 25px;
-      height: 25px;
-      opacity: 0.8;
-      animation: fall linear infinite;
-      z-index: 1;
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-10vh) rotate(0deg);
-        opacity: 0.9;
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0.2;
-      }
-    }
-  </style>
+/* GALERI PENGANTIN */
+.bride-groom-container {
+  overflow-x:hidden; white-space:nowrap; margin:30px 0; position:relative;
+}
+.bride-groom-container img {
+  height:200px; margin:0 10px; display:inline-block;
+  border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+</style>
 </head>
 <body>
-  <!-- Kelopak bunga -->
-  <div id="petals"></div>
+<div id="petals"></div>
+<div class="overlay">
+  <h1 id="title">MAJLIS PERKAHWINAN</h1>
+  <div class="initials" id="initials">O & A</div>
+  <div class="names" id="names">Omar & Alia</div>
+  <div class="date" id="date">22 . 01 . 2025</div>
+  <div class="countdown" id="countdown"></div>
 
-  <div class="overlay">
-    <h1>MAJLIS PERKAHWINAN</h1>
-    <div class="initials">O & A</div>
-    <div class="names">Omar & Alia</div>
-    <div class="date">22 . 01 . 2025</div>
-
-    <!-- Countdown -->
-    <div class="countdown" id="countdown"></div>
-
-    <div class="time-place">11.00AM – 4.00PM<br>Dewan Serbaguna</div>
-
-    <!-- Atur Cara Majlis -->
-    <section>
-      <h2>Atur Cara Majlis</h2>
-      <ul>
-        <li>11:00 AM – Ketibaan Tetamu</li>
-        <li>12:00 PM – Jamuan Bermula</li>
-        <li>2:00 PM – Sesi Bergambar</li>
-        <li>4:00 PM – Majlis Tamat</li>
-      </ul>
-    </section>
-
-    <!-- Peta Lokasi -->
-<section id="lokasi">
-  <h2>Lokasi Majlis: Kampung Lihak-Lihak</h2>
-  <iframe
-    src="https://www.google.com/maps?q=Kampung+Lihak-Lihak,Semporna,Sabah,Malaysia&output=embed"
-    width="100%"
-    height="300"
-    style="border:0; border-radius:10px;"
-    allowfullscreen=""
-    loading="lazy">
-  </iframe>
-</section> 
-  <p><a https:"//maps.app.goo.gl/NFDc4EYY1E2N9ppx5">Buka dalam Google Maps</a></p>
-</section>
-
-    <!-- Muzik Latar -->
-<section>
-  <h2>Muzik</h2>
-  <audio id="bg-music" loop>
-    <source src="lagu.mp3" type="audio/mpeg">
-    Browser anda tidak menyokong audio.
-  </audio>
-  <p><em>Sentuh skrin sekali untuk mainkan lagu 🎵</em></p>
-</section>
-
-    <!-- Doa Pengantin -->
-    <section class="doa">
-      <h2>Doa Pengantin</h2>
-      <p>
-        "Ya Allah, berkatilah majlis ini dengan keberkatan dari-Mu,  
-        limpahkanlah kasih sayang antara kedua mempelai ini,  
-        satukanlah mereka dalam kebaikan dan lindungilah mereka  
-        dari segala keburukan. Jadikanlah rumahtangga mereka  
-        sakinah, mawaddah, wa rahmah."
-      </p>
-      <p><strong>آمِيْن يَا رَبَّ الْعَالَمِيْن</strong></p>
-    </section>
+  <div class="bride-groom-container" id="scroll-gallery">
+    <img src="pengantin1.jpg" alt="Pengantin 1">
+    <img src="pengantin2.jpg" alt="Pengantin 2">
+    <img src="pengantin3.jpg" alt="Pengantin 3">
   </div>
 
-  <script>
-    // Animasi bila elemen muncul
-    const elements = document.querySelectorAll("h1, .initials, .names, .date, .countdown, .time-place, section");
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        }
-      });
-    }, { threshold: 0.2 });
-    elements.forEach(el => observer.observe(el));
+  <section>
+    <h2>Atur Cara Majlis</h2>
+    <ul>
+      <li>11:00 AM – Ketibaan Tetamu</li>
+      <li>12:00 PM – Jamuan Bermula</li>
+      <li>2:00 PM – Sesi Bergambar</li>
+      <li>4:00 PM – Majlis Tamat</li>
+    </ul>
+  </section>
 
-    // Countdown Timer
-    const countdown = document.getElementById("countdown");
-    const weddingDate = new Date("Jan 22, 2025 11:00:00").getTime();
+  <section id="lokasi">
+    <h2>Lokasi Majlis: Kampung Lihak-Lihak</h2>
+    <iframe 
+      src="https://www.google.com/maps?q=Kampung+Lihak-Lihak,Semporna,Sabah,Malaysia&output=embed" 
+      width="100%" height="300" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy">
+    </iframe>
+    <p><a href="https://maps.app.goo.gl/NFDc4EYY1E2N9ppx5" target="_blank" style="text-decoration:none; color:#1e3a5f; font-weight:bold;">Buka dalam Google Maps</a></p>
+  </section>
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = weddingDate - now;
+  <section>
+    <h2>Muzik</h2>
+    <audio id="bg-music" loop>
+      <source src="lagu.mp3" type="audio/mpeg">
+      Browser anda tidak menyokong audio.
+    </audio>
+    <!-- Ayat arahan telah dibuang -->
+  </section>
 
-      if (distance < 0) {
-        countdown.innerHTML = "Majlis telah bermula 🎉";
-        return;
-      }
+  <section class="doa">
+    <h2>Doa Pengantin</h2>
+    <p>"Ya Allah, berkatilah majlis ini dengan keberkatan dari-Mu,  
+    limpahkanlah kasih sayang antara kedua mempelai ini,  
+    satukanlah mereka dalam kebaikan dan lindungilah mereka  
+    dari segala keburukan. Jadikanlah rumahtangga mereka  
+    sakinah, mawaddah, wa rahmah."</p>
+    <p><strong>آمِيْن يَا رَبَّ الْعَالَمِيْن</strong></p>
+  </section>
+</div>
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+<script>
+// ANIMASI HEADER & NAMA
+const animOrder = ['title','initials','names','date','countdown'];
+animOrder.forEach((id,i)=>{
+  setTimeout(()=>{ document.getElementById(id).classList.add('show'); }, i*600);
+});
 
-      countdown.innerHTML = `${days} Hari ${hours} Jam ${minutes} Minit ${seconds} Saat lagi`;
-    }
+// COUNTDOWN
+const countdown = document.getElementById("countdown");
+const weddingDate = new Date("Jan 22, 2025 11:00:00").getTime();
+function updateCountdown(){
+  const now = new Date().getTime();
+  const distance = weddingDate - now;
+  if(distance<0){countdown.innerHTML="Majlis telah bermula 🎉"; return;}
+  const days=Math.floor(distance/(1000*60*60*24));
+  const hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+  const minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+  const seconds=Math.floor((distance%(1000*60))/1000);
+  countdown.innerHTML=`${days} Hari ${hours} Jam ${minutes} Minit ${seconds} Saat lagi`;
+}
+setInterval(updateCountdown,1000); updateCountdown();
 
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+// KELOPAK BUNGA PREMIUM
+const petalsContainer = document.getElementById("petals");
+function createPetal(){
+  const petal = document.createElement("div");
+  petal.classList.add("petal");
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.animationDuration = (5 + Math.random() * 5) + "s";
+  petal.style.opacity = 0.5 + Math.random() * 0.5;
+  const size = 25 + Math.random() * 30;
+  petal.style.width = size + 'px';
+  petal.style.height = size + 'px';
+  petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+  petalsContainer.appendChild(petal);
+  setTimeout(() => { petal.remove(); }, 12000);
+}
+setInterval(createPetal, 200);
 
-    // 🌸 Kelopak bunga jatuh
-    const petalsContainer = document.getElementById("petals");
-    function createPetal() {
-      const petal = document.createElement("div");
-      petal.classList.add("petal");
-      petal.style.left = Math.random() * 100 + "vw";
-      petal.style.animationDuration = 5 + Math.random() * 5 + "s"; // kelajuan berbeza
-      petal.style.opacity = Math.random();
-      petal.style.transform = `rotate(${Math.random() * 360}deg)`;
-      petalsContainer.appendChild(petal);
+// AUDIO
+const music=document.getElementById("bg-music");
+document.body.addEventListener("click",()=>{music.play().catch(()=>{});},{once:true});
 
-      setTimeout(() => { petal.remove(); }, 10000);
-    }
-    setInterval(createPetal, 400); // setiap 0.4s keluar kelopak baru
-// 🎵 Mainkan muzik selepas user sentuh/klik skrin
-const music = document.getElementById("bg-music");
+// SCROLL GALERI PENGANTIN
+const gallery = document.getElementById("scroll-gallery");
+let scrollPos=0;
+function scrollGallery(){
+  scrollPos+=0.8;
+  if(scrollPos>gallery.scrollWidth-gallery.clientWidth) scrollPos=0;
+  gallery.scrollTo({left:scrollPos,behavior:"smooth"});
+}
+setInterval(scrollGallery,40);
 
-document.body.addEventListener("click", () => {
-  music.play().catch(err => console.log("Autoplay disekat:", err));
-}, { once: true });
-  </script>
+// OBSERVER UNTUK SECTION & DOA
+const elements=document.querySelectorAll("section,.doa");
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add("show");
+  });
+},{threshold:0.2});
+elements.forEach(el=>observer.observe(el));
+</script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kad Jemputan Kahwin Premium</title>
+<title>Jemputan Majlis Perkahwinan</title>
 <style>
 /* BODY & BACKGROUND */
 body {
@@ -34,10 +34,20 @@ h1, .initials, .names, .date, .countdown {
   transform:translateY(30px);
   transition: all 1s ease;
 }
-h1 { font-size:28px; margin-bottom:20px; letter-spacing:3px; }
-.initials { font-size:100px; font-weight:bold; margin:10px 0; background:linear-gradient(90deg,#f4c542,#fff); -webkit-background-clip:text; color:transparent; animation: shimmer 2s infinite; }
-.names { font-size:30px; margin:5px 0 20px; }
-.date, .countdown { font-size:18px; margin:10px 0; font-weight:bold; }
+h1 { 
+  font-size:32px; 
+  margin-bottom:25px; 
+  letter-spacing:3px; 
+  font-family:'Palatino Linotype', 'Georgia', serif;
+  font-weight:bold;
+}
+.initials { 
+  font-size:100px; font-weight:bold; margin:10px 0; 
+  background:linear-gradient(90deg,#f4c542,#fff); 
+  -webkit-background-clip:text; color:transparent; animation: shimmer 2s infinite; 
+}
+.names { font-size:32px; margin:5px 0 25px; font-weight:bold; letter-spacing:1px; }
+.date, .countdown { font-size:20px; margin:12px 0; font-weight:600; }
 
 /* SHIMMER EFFECT */
 @keyframes shimmer{
@@ -51,24 +61,27 @@ h1 { font-size:28px; margin-bottom:20px; letter-spacing:3px; }
 /* SECTION */
 section{
   margin:40px 0;
-  padding:20px;
-  background: rgba(255,255,255,0.3);
-  border-radius:15px;
+  padding:25px;
+  background: rgba(255,255,255,0.35);
+  border-radius:20px;
   box-shadow:0 4px 12px rgba(0,0,0,0.05);
   opacity:0;
   transform:translateY(20px);
   transition: all 1s ease;
+  font-family:'Georgia','Palatino Linotype', serif;
+  color:#1e3a5f;
+  line-height:1.8;
 }
 
 /* UL LIST */
-ul { list-style:none; padding:0; font-size:16px; line-height:1.8; max-width:400px; margin:0 auto; text-align:left; }
+ul { list-style:none; padding:0; font-size:17px; line-height:1.9; max-width:450px; margin:0 auto; text-align:left; }
 
 /* AUDIO */
 audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
 
 /* DOA */
 .doa {
-  margin-top:40px; padding:25px; background: rgba(255,255,255,0.3);
+  margin-top:40px; padding:25px; background: rgba(255,255,255,0.35);
   border-radius:20px; font-style:italic; font-size:18px; line-height:1.8; color:#1e3a5f;
   border:2px solid rgba(30,58,95,0.2); backdrop-filter:blur(5px);
   opacity:0; transform:translateY(20px); transition: all 1s ease;
@@ -104,12 +117,26 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
   height:200px; margin:0 10px; display:inline-block;
   border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
+
+/* HUBUNGI KAMI */
+.contact {
+  margin:50px 0 20px 0;
+  padding:25px;
+  background: rgba(255,255,255,0.35);
+  border-radius:20px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  font-size:18px;
+  line-height:1.8;
+}
+.contact h2 { margin-bottom:15px; font-size:24px; color:#1e3a5f; }
+.contact p { margin:5px 0; }
+.contact a { color:#1e3a5f; text-decoration:none; font-weight:bold; }
 </style>
 </head>
 <body>
 <div id="petals"></div>
 <div class="overlay">
-  <h1 id="title">MAJLIS PERKAHWINAN</h1>
+  <h1 id="title">Jemputan Majlis Perkahwinan</h1>
   <div class="initials" id="initials">O & A</div>
   <div class="names" id="names">Omar & Alia</div>
   <div class="date" id="date">22 . 01 . 2025</div>
@@ -137,7 +164,7 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
       src="https://www.google.com/maps?q=Kampung+Lihak-Lihak,Semporna,Sabah,Malaysia&output=embed" 
       width="100%" height="300" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy">
     </iframe>
-    <p><a href="https://maps.app.goo.gl/NFDc4EYY1E2N9ppx5" target="_blank" style="text-decoration:none; color:#1e3a5f; font-weight:bold;">Buka dalam Google Maps</a></p>
+    <p><a href="https://maps.app.goo.gl/NFDc4EYY1E2N9ppx5" target="_blank">Buka dalam Google Maps</a></p>
   </section>
 
   <section>
@@ -146,7 +173,6 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
       <source src="lagu.mp3" type="audio/mpeg">
       Browser anda tidak menyokong audio.
     </audio>
-    <!-- Ayat arahan telah dibuang -->
   </section>
 
   <section class="doa">
@@ -158,6 +184,15 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
     sakinah, mawaddah, wa rahmah."</p>
     <p><strong>آمِيْن يَا رَبَّ الْعَالَمِيْن</strong></p>
   </section>
+
+  <!-- HUBUNGI KAMI -->
+  <section class="contact">
+    <h2>Hubungi Kami</h2>
+    <p>Email: <a href="mailto:mickeymikapple@gmail.com">mickeymikapple@gmail.com</a></p>
+    <p>WhatsApp: <a href="https://wa.me/60149236577" target="_blank">Mik</a></p>
+    <p>WhatsApp: <a href="https://wa.me/60166234337" target="_blank">Fazrinah</a></p>
+  </section>
+
 </div>
 
 <script>
@@ -205,22 +240,23 @@ document.body.addEventListener("click",()=>{music.play().catch(()=>{});},{once:t
 
 // SCROLL GALERI PENGANTIN
 const gallery = document.getElementById("scroll-gallery");
-let scrollPos=0;
+let scrollPos=0
 function scrollGallery(){
-  scrollPos+=0.8;
-  if(scrollPos>gallery.scrollWidth-gallery.clientWidth) scrollPos=0;
-  gallery.scrollTo({left:scrollPos,behavior:"smooth"});
+  scrollPos += 0.8; // kelajuan scroll
+  if(scrollPos > gallery.scrollWidth - gallery.clientWidth) scrollPos = 0;
+  gallery.scrollTo({ left: scrollPos, behavior: "smooth" });
 }
-setInterval(scrollGallery,40);
+setInterval(scrollGallery, 40);
 
 // OBSERVER UNTUK SECTION & DOA
-const elements=document.querySelectorAll("section,.doa");
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
+const elements = document.querySelectorAll("section,.doa");
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
     if(entry.isIntersecting) entry.target.classList.add("show");
   });
-},{threshold:0.2});
-elements.forEach(el=>observer.observe(el));
+}, { threshold: 0.2 });
+
+elements.forEach(el => observer.observe(el));
 </script>
 </body>
 </html>

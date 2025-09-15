@@ -5,18 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jemputan Majlis Perkahwinan</title>
 <style>
-/* BODY & BACKGROUND */
 body {
   margin:0;
   font-family:'Georgia', serif;
   background:#e6f2ff;
   overflow-x:hidden;
   text-align:center;
-  position:relative;
   color:#1e3a5f;
 }
-
-/* OVERLAY */
 .overlay {
   background: rgba(255,255,255,0.25);
   backdrop-filter: blur(12px);
@@ -27,40 +23,19 @@ body {
   position:relative;
   z-index:2;
 }
-
-/* HEADER & NAMA */
 h1, .initials, .names, .date, .countdown {
   opacity:0;
   transform:translateY(30px);
   transition: all 1s ease;
 }
-h1 { 
-  font-size:32px; 
-  margin-bottom:25px; 
-  letter-spacing:3px; 
-  font-family:'Palatino Linotype', 'Georgia', serif;
-  font-weight:bold;
-}
-.initials { 
-  font-size:100px; font-weight:bold; margin:10px 0; 
-  background:linear-gradient(90deg,#f4c542,#fff); 
-  -webkit-background-clip:text; color:transparent; animation: shimmer 2s infinite; 
-}
+h1 { font-size:32px; margin-bottom:25px; letter-spacing:3px; font-weight:bold; }
+.initials { font-size:100px; font-weight:bold; margin:10px 0; background:linear-gradient(90deg,#f4c542,#fff); -webkit-background-clip:text; color:transparent; animation: shimmer 2s infinite; }
 .names { font-size:32px; margin:5px 0 25px; font-weight:bold; letter-spacing:1px; }
 .date, .countdown { font-size:20px; margin:12px 0; font-weight:600; }
-
-/* SHIMMER EFFECT */
-@keyframes shimmer{
-  0%{background-position:-200px 0;}
-  100%{background-position:200px 0;}
-}
-
-/* SHOW CLASS */
+@keyframes shimmer{0%{background-position:-200px 0;}100%{background-position:200px 0;}}
 .show{ opacity:1; transform:translateY(0); }
-
-/* SECTION */
 section{
-  margin:40px 0;
+  margin:30px 0;
   padding:25px;
   background: rgba(255,255,255,0.35);
   border-radius:20px;
@@ -68,26 +43,9 @@ section{
   opacity:0;
   transform:translateY(20px);
   transition: all 1s ease;
-  font-family:'Georgia','Palatino Linotype', serif;
-  color:#1e3a5f;
   line-height:1.8;
 }
-
-/* UL LIST */
 ul { list-style:none; padding:0; font-size:17px; line-height:1.9; max-width:450px; margin:0 auto; text-align:left; }
-
-/* AUDIO */
-audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
-
-/* DOA */
-.doa {
-  margin-top:40px; padding:25px; background: rgba(255,255,255,0.35);
-  border-radius:20px; font-style:italic; font-size:18px; line-height:1.8; color:#1e3a5f;
-  border:2px solid rgba(30,58,95,0.2); backdrop-filter:blur(5px);
-  opacity:0; transform:translateY(20px); transition: all 1s ease;
-}
-
-/* KELOPAK BUNGA + GLITTER */
 .petal {
   position: fixed;
   top: -10vh;
@@ -99,35 +57,12 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
   z-index:1;
   animation: fall linear infinite, glitter 1.5s ease-in-out infinite alternate;
 }
-@keyframes fall{
-  0%{transform:translateY(-10vh) rotate(0deg); opacity:1;}
-  100%{transform:translateY(110vh) rotate(360deg); opacity:0.3;}
-}
-@keyframes glitter{
-  0%{ box-shadow:0 0 0px rgba(255,255,255,0);}
-  50%{ box-shadow:0 0 10px rgba(255,255,255,0.6);}
-  100%{ box-shadow:0 0 0px rgba(255,255,255,0);}
-}
-
-/* GALERI PENGANTIN */
-.bride-groom-container {
-  overflow-x:hidden; white-space:nowrap; margin:30px 0; position:relative;
-}
-.bride-groom-container img {
-  height:200px; margin:0 10px; display:inline-block;
-  border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
-
-/* HUBUNGI KAMI */
-.contact {
-  margin:50px 0 20px 0;
-  padding:25px;
-  background: rgba(255,255,255,0.35);
-  border-radius:20px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.05);
-  font-size:18px;
-  line-height:1.8;
-}
+@keyframes fall{0%{transform:translateY(-10vh) rotate(0deg); opacity:1;}100%{transform:translateY(110vh) rotate(360deg); opacity:0.3;}}
+@keyframes glitter{0%{ box-shadow:0 0 0px rgba(255,255,255,0);}50%{ box-shadow:0 0 10px rgba(255,255,255,0.6);}100%{ box-shadow:0 0 0px rgba(255,255,255,0);}}
+.bride-groom-container { overflow-x:hidden; white-space:nowrap; margin:30px 0; position:relative; }
+.bride-groom-container img { height:200px; margin:0 10px; display:inline-block; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+.doa { margin-top:40px; padding:25px; background: rgba(255,255,255,0.35); border-radius:20px; font-style:italic; font-size:18px; border:2px solid rgba(30,58,95,0.2); backdrop-filter:blur(5px); opacity:0; transform:translateY(20px); transition: all 1s ease; }
+.contact { margin:20px 0 20px 0; padding:25px; background: rgba(255,255,255,0.35); border-radius:20px; box-shadow:0 4px 12px rgba(0,0,0,0.05); font-size:18px; line-height:1.8; }
 .contact h2 { margin-bottom:15px; font-size:24px; color:#1e3a5f; }
 .contact p { margin:5px 0; }
 .contact a { color:#1e3a5f; text-decoration:none; font-weight:bold; }
@@ -164,16 +99,8 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
       src="https://www.google.com/maps?q=Kampung+Lihak-Lihak,Semporna,Sabah,Malaysia&output=embed" 
       width="100%" height="300" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy">
     </iframe>
-    <p><a href="https://maps.app.goo.gl/NFDc4EYY1E2N9ppx5" target="_blank">Buka dalam Google Maps</a></p>
-  </section>
-
-  <section>
-    <h2>Muzik</h2>
-    <audio id="bg-music" loop>
-      <source src="lagu.mp3" type="audio/mpeg">
-      Browser anda tidak menyokong audio.
-    </audio>
-  </section>
+    <p><a href="https://maps.app.goo.gl/NFDc4EYY1E2N9ppx5" target="_blank">📍 Buka dalam Google Maps</a></p>
+  </section> 
 
   <section class="doa">
     <h2>Doa Pengantin</h2>
@@ -185,7 +112,6 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
     <p><strong>آمِيْن يَا رَبَّ الْعَالَمِيْن</strong></p>
   </section>
 
-  <!-- HUBUNGI KAMI -->
   <section class="contact">
     <h2>Hubungi Kami</h2>
     <p>Email: <a href="mailto:mickeymikapple@gmail.com">mickeymikapple@gmail.com</a></p>
@@ -193,6 +119,10 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
     <p>WhatsApp: <a href="https://wa.me/60166234337" target="_blank">Fazrinah</a></p>
   </section>
 
+  <audio id="bg-music" loop>
+    <source src="lagu.mp3" type="audio/mpeg">
+    Browser anda tidak menyokong audio.
+  </audio>
 </div>
 
 <script>
@@ -220,8 +150,7 @@ setInterval(updateCountdown,1000); updateCountdown();
 // KELOPAK BUNGA PREMIUM
 const petalsContainer = document.getElementById("petals");
 function createPetal(){
-  const petal = document.createElement("div");
-  petal.classList.add("petal");
+  const petal = document.createElement("divpetal.classList.add("petal");
   petal.style.left = Math.random() * 100 + "vw";
   petal.style.animationDuration = (5 + Math.random() * 5) + "s";
   petal.style.opacity = 0.5 + Math.random() * 0.5;
@@ -234,13 +163,15 @@ function createPetal(){
 }
 setInterval(createPetal, 200);
 
-// AUDIO
-const music=document.getElementById("bg-music");
-document.body.addEventListener("click",()=>{music.play().catch(()=>{});},{once:true});
+// MAINKAN AUDIO TANPA PLAYER TULISAN
+const music = document.getElementById("bg-music");
+document.body.addEventListener("click", () => {
+  music.play().catch(()=>{});
+}, {once:true});
 
-// SCROLL GALERI PENGANTIN
+// AUTO SCROLL GALERI PENGANTIN
 const gallery = document.getElementById("scroll-gallery");
-let scrollPos=0
+let scrollPos = 0;
 function scrollGallery(){
   scrollPos += 0.8; // kelajuan scroll
   if(scrollPos > gallery.scrollWidth - gallery.clientWidth) scrollPos = 0;
@@ -255,7 +186,6 @@ const observer = new IntersectionObserver(entries => {
     if(entry.isIntersecting) entry.target.classList.add("show");
   });
 }, { threshold: 0.2 });
-
 elements.forEach(el => observer.observe(el));
 </script>
 </body>

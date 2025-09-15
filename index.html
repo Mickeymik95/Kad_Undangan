@@ -3,27 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jemputan Majlis Perkahwinan</title>
+<title>Jemputan Majlis Perkahwinan Ultimate</title>
 <style>
 /* BODY & BACKGROUND */
 body {
   margin:0;
   font-family:'Georgia', serif;
-  background:#e6f2ff;
   overflow-x:hidden;
   text-align:center;
-  position:relative;
   color:#1e3a5f;
+  position:relative;
+}
+
+/* VIDEO BACKGROUND */
+#bg-video {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  z-index:-3;
+  opacity:0.85;
 }
 
 /* OVERLAY */
 .overlay {
   background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(15px);
   min-height:100vh;
   padding:40px 20px;
-  border-radius:20px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.1);
+  border-radius:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
   position:relative;
   z-index:2;
 }
@@ -35,18 +44,14 @@ h1, .initials, .names, .date, .countdown {
   transition: all 1s ease;
 }
 h1 { 
-  font-size:32px; 
-  margin-bottom:25px; 
-  letter-spacing:3px; 
-  font-family:'Palatino Linotype', 'Georgia', serif;
-  font-weight:bold;
+  font-size:38px; margin-bottom:20px; letter-spacing:4px; font-weight:bold; color:#1a2e4b;
 }
 .initials { 
-  font-size:100px; font-weight:bold; margin:10px 0; 
+  font-size:110px; font-weight:bold; margin:10px 0; 
   background:linear-gradient(90deg,#f4c542,#fff); 
   -webkit-background-clip:text; color:transparent; animation: shimmer 2s infinite; 
 }
-.names { font-size:32px; margin:5px 0 25px; font-weight:bold; letter-spacing:1px; }
+.names { font-size:36px; margin:5px 0 20px; font-weight:bold; letter-spacing:1px; }
 .date, .countdown { font-size:20px; margin:12px 0; font-weight:600; }
 
 /* SHIMMER EFFECT */
@@ -54,8 +59,6 @@ h1 {
   0%{background-position:-200px 0;}
   100%{background-position:200px 0;}
 }
-
-/* SHOW CLASS */
 .show{ opacity:1; transform:translateY(0); }
 
 /* SECTION */
@@ -64,12 +67,10 @@ section{
   padding:25px;
   background: rgba(255,255,255,0.35);
   border-radius:20px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  box-shadow:0 5px 20px rgba(0,0,0,0.1);
   opacity:0;
   transform:translateY(20px);
   transition: all 1s ease;
-  font-family:'Georgia','Palatino Linotype', serif;
-  color:#1e3a5f;
   line-height:1.8;
 }
 
@@ -77,7 +78,65 @@ section{
 ul { list-style:none; padding:0; font-size:17px; line-height:1.9; max-width:450px; margin:0 auto; text-align:left; }
 
 /* AUDIO */
-audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
+audio { display:none; }
+
+/* BUTTON MUSIC */
+#music-btn {
+  position: fixed;
+  top:20px;
+  right:20px;
+  background:#f4c542;
+  border:none;
+  padding:12px 18px;
+  border-radius:50px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  z-index:100;
+}
+#music-btn:hover { transform:scale(1.1); }
+
+/* BUTTON RSVP */
+#rsvp-btn {
+  position: fixed;
+  top:70px;
+  right:20px;
+  background:#1a2e4b;
+  color:white;
+  border:none;
+  padding:12px 18px;
+  border-radius:50px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  z-index:100;
+}
+#rsvp-btn:hover { transform:scale(1.1); }
+
+/* MODAL RSVP */
+#rsvp-modal {
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.7);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:200;
+}
+#rsvp-modal .modal-content {
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  text-align:left;
+  max-width:400px;
+  width:90%;
+}
+#rsvp-modal label { display:block; margin:10px 0 5px; font-weight:bold; }
+#rsvp-modal input, #rsvp-modal select { width:100%; padding:8px; margin-bottom:15px; border-radius:5px; border:1px solid #ccc; }
+
+/* FIREWORKS CANVAS */
+#fireworks-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; }
 
 /* DOA */
 .doa {
@@ -87,7 +146,7 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
   opacity:0; transform:translateY(20px); transition: all 1s ease;
 }
 
-/* KELOPAK BUNGA + GLITTER */
+/* KELOPAK BUNGA 3D */
 .petal {
   position: fixed;
   top: -10vh;
@@ -96,12 +155,12 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
   background-repeat: no-repeat;
   width:35px; height:35px;
   opacity:0.9;
-  z-index:1;
+  z-index:-2;
   animation: fall linear infinite, glitter 1.5s ease-in-out infinite alternate;
 }
 @keyframes fall{
-  0%{transform:translateY(-10vh) rotate(0deg); opacity:1;}
-  100%{transform:translateY(110vh) rotate(360deg); opacity:0.3;}
+  0%{transform:translateY(-10vh) rotateX(0deg) rotateY(0deg); opacity:1;}
+  100%{transform:translateY(110vh) rotateX(360deg) rotateY(360deg); opacity:0.3;}
 }
 @keyframes glitter{
   0%{ box-shadow:0 0 0px rgba(255,255,255,0);}
@@ -115,8 +174,10 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
 }
 .bride-groom-container img {
   height:200px; margin:0 10px; display:inline-block;
-  border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.15);
+  transition: transform 0.5s ease;
 }
+.bride-groom-container img:hover { transform: scale(1.05); }
 
 /* HUBUNGI KAMI */
 .contact {
@@ -124,17 +185,42 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
   padding:25px;
   background: rgba(255,255,255,0.35);
   border-radius:20px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
   font-size:18px;
   line-height:1.8;
 }
 .contact h2 { margin-bottom:15px; font-size:24px; color:#1e3a5f; }
 .contact p { margin:5px 0; }
 .contact a { color:#1e3a5f; text-decoration:none; font-weight:bold; }
+
+/* SOSIAL MEDIA ICONS */
+.social-icons {
+  margin-top:20px;
+}
+.social-icons a {
+  margin:0 10px; font-size:24px; color:#1e3a5f; text-decoration:none;
+  transition: transform 0.3s;
+}
+.social-icons a:hover { transform:scale(1.2); }
 </style>
 </head>
 <body>
+
+<!-- BUTTONS -->
+<button id="music-btn">▶ Muzik</button>
+<button id="rsvp-btn">RSVP</button>
+
+<!-- VIDEO BACKGROUND -->
+<video id="bg-video" autoplay muted loop>
+  <source src="background.mp4" type="video/mp4">
+</video>
+
+<!-- FIREWORKS CANVAS -->
+<canvas id="fireworks-canvas"></canvas>
+
+<!-- KELAPA BUNGA -->
 <div id="petals"></div>
+
 <div class="overlay">
   <h1 id="title">Jemputan Majlis Perkahwinan</h1>
   <div class="initials" id="initials">O & A</div>
@@ -167,14 +253,6 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
     <p><a href="https://maps.app.goo.gl/NFDc4EYY1E2N9ppx5" target="_blank">Buka dalam Google Maps</a></p>
   </section>
 
-  <section>
-    <h2>Muzik</h2>
-    <audio id="bg-music" loop>
-      <source src="lagu.mp3" type="audio/mpeg">
-      Browser anda tidak menyokong audio.
-    </audio>
-  </section>
-
   <section class="doa">
     <h2>Doa Pengantin</h2>
     <p>"Ya Allah, berkatilah majlis ini dengan keberkatan dari-Mu,  
@@ -185,15 +263,39 @@ audio { margin-top:20px; width:100%; max-width:350px; border-radius:10px; }
     <p><strong>آمِيْن يَا رَبَّ الْعَالَمِيْن</strong></p>
   </section>
 
-  <!-- HUBUNGI KAMI -->
   <section class="contact">
     <h2>Hubungi Kami</h2>
     <p>Email: <a href="mailto:mickeymikapple@gmail.com">mickeymikapple@gmail.com</a></p>
     <p>WhatsApp: <a href="https://wa.me/60149236577" target="_blank">Mik</a></p>
     <p>WhatsApp: <a href="https://wa.me/60166234337" target="_blank">Fazrinah</a></p>
+    <div class="social-icons">
+      <a href="https://instagram.com" target="_blank">📸</a>
+      <a href="mailto:mickeymikapple@gmail.com">✉️</a>
+      <a href="https://wa.me/60149236577" target="_blank">💬</a>
+    </div>
   </section>
-
 </div>
+
+<!-- MODAL RSVP -->
+<div id="rsvp-modal">
+  <div class="modal-content">
+    <h2>RSVP Jemputan</h2>
+    <form id="rsvp-form">
+      <label for="name">Nama:</label>
+      <input type="text" id="name" required>
+      <label for="attend">Hadir?</label>
+      <select id="attend">
+        <option value="ya">Ya</option>
+        <option value="tidak">Tidak</option>
+      </select>
+      <button type="submit" style="background:#1a2e4b;color:white;padding:10px 20px;border:none;border-radius:10px;">Hantar</button>
+    </form>
+  </div>
+</div>
+
+<audio id="bg-music" loop>
+  <source src="lagu.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 // ANIMASI HEADER & NAMA
@@ -215,9 +317,10 @@ function updateCountdown(){
   const seconds=Math.floor((distance%(1000*60))/1000);
   countdown.innerHTML=`${days} Hari ${hours} Jam ${minutes} Minit ${seconds} Saat lagi`;
 }
-setInterval(updateCountdown,1000); updateCountdown();
+setInterval(updateCountdown,1000); 
+updateCountdown();
 
-// KELOPAK BUNGA PREMIUM
+// KELOPAK BUNGA 3D
 const petalsContainer = document.getElementById("petals");
 function createPetal(){
   const petal = document.createElement("div");
@@ -228,21 +331,29 @@ function createPetal(){
   const size = 25 + Math.random() * 30;
   petal.style.width = size + 'px';
   petal.style.height = size + 'px';
-  petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+  petal.style.transform = `rotateX(${Math.random()*360}deg) rotateY(${Math.random()*360}deg)`;
   petalsContainer.appendChild(petal);
   setTimeout(() => { petal.remove(); }, 12000);
 }
 setInterval(createPetal, 200);
 
-// AUDIO
-const music=document.getElementById("bg-music");
-document.body.addEventListener("click",()=>{music.play().catch(()=>{});},{once:true});
+// AUDIO START/PAUSE BUTTON
+const music = document.getElementById("bg-music");
+music.volume = 0.5;
+const musicBtn = document.getElementById("music-btn");
+let playing = false;
+musicBtn.addEventListener("click", ()=>{
+  if(!playing){ music.play().catch(()=>{}); musicBtn.textContent='⏸ Muzik'; playing=true; }
+  else { music.pause(); musicBtn.textContent='▶ Muzik'; playing=false; }
+});
 
 // SCROLL GALERI PENGANTIN
 const gallery = document.getElementById("scroll-gallery");
-let scrollPos=0function scrollGallery(){
-  scrollPos += 0.8; // kelajuan scroll
-  if(scrollPos > gallery.scrollWidth - gallery.clientWidth) scrollPos = 0;
+let scrollPos = 0;
+function scrollGallery(){
+  scrollPos += 0.8;
+  if(scrollPos > gallery.scrollWidth - gallery.clientWidth) scroll
+// SCROLL GALERI PENGANTIN (sambungan)
   gallery.scrollTo({ left: scrollPos, behavior: "smooth" });
 }
 setInterval(scrollGallery, 40);
@@ -254,8 +365,98 @@ const observer = new IntersectionObserver(entries => {
     if(entry.isIntersecting) entry.target.classList.add("show");
   });
 }, { threshold: 0.2 });
-
 elements.forEach(el => observer.observe(el));
+
+// MODAL RSVP
+const rsvpBtn = document.getElementById("rsvp-btn");
+const rsvpModal = document.getElementById("rsvp-modal");
+rsvpBtn.addEventListener("click", ()=>{ rsvpModal.style.display="flex"; });
+rsvpModal.addEventListener("click", (e)=>{
+  if(e.target===rsvpModal) rsvpModal.style.display="none";
+});
+document.getElementById("rsvp-form").addEventListener("submit", e=>{
+  e.preventDefault();
+  alert("Terima kasih! RSVP anda telah dihantar.");
+  rsvpModal.style.display="none";
+});
+
+// FIREWORKS SIMPLE
+const canvas = document.getElementById("fireworks-canvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+window.addEventListener("resize", ()=>{ canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
+
+function random(min,max){ return Math.random()*(max-min)+min; }
+class Firework{
+  constructor(){
+    this.x=random(0,canvas.width);
+    this.y=canvas.height;
+    this.targetY=random(canvas.height/4,canvas.height/2);
+    this.radius=2;
+    this.color=`hsl(${random(0,360)},100%,60%)`;
+    this.speed=2+Math.random()*3;
+    this.exploded=false;
+    this.particles=[];
+  }
+  update(){
+    if(!this.exploded){
+      this.y -= this.speed;
+      if(this.y <= this.targetY) this.explode();
+    } else {
+      this.particles.forEach(p=>{
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05;
+        p.alpha -= 0.02;
+      });
+      this.particles = this.particles.filter(p=>p.alpha>0);
+    }
+  }
+  explode(){
+    this.exploded=true;
+    for(let i=0;i<50;i++){
+      const angle=Math.random()*2*Math.PI;
+      const speed=random(2,5);
+      this.particles.push({
+        x:this.x,
+        y:this.y,
+        vx:Math.cos(angle)*speed,
+        vy:Math.sin(angle)*speed,
+        alpha:1,
+        color:`hsl(${random(0,360)},100%,60%)`
+      });
+    }
+  }
+  draw(){
+    if(!this.exploded){
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+      ctx.fillStyle=this.color;
+      ctx.fill();
+    } else {
+      this.particles.forEach(p=>{
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,2,0,Math.PI*2);
+        ctx.fillStyle=`rgba(${p.color},${p.alpha})`;
+        ctx.fillStyle = p.color.replace("hsl","hsla").replace(")",`,${p.alpha})`);
+        ctx.fill();
+      });
+    }
+  }
+}
+let fireworks = [];
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(Math.random()<0.03) fireworks.push(new Firework());
+  fireworks.forEach(f=>{
+    f.update();
+    f.draw();
+  });
+  fireworks = fireworks.filter(f=>!f.exploded || f.particles.length>0);
+  requestAnimationFrame(animate);
+}
+animate();
 </script>
 </body>
 </html>

@@ -201,16 +201,51 @@ document.querySelectorAll("section").forEach(el=>{
   new IntersectionObserver(entries=>{ entries.forEach(entry=>{ if(entry.isIntersecting) entry.target.classList.add("show"); }); }, {threshold:0.2}).observe(el);
 });
 
-// RSVP
+// RSVP - simpan ke Google Sheets
 const rsvpBtn=document.createElement("button");
 rsvpBtn.textContent="RSVP";
-rsvpBtn.style.position="fixed"; rsvpBtn.style.bottom="20px"; rsvpBtn.style.right="20px";
-rsvpBtn.style.background="#f4c542"; rsvpBtn.style.padding="12px 20px"; rsvpBtn.style.border="none"; rsvpBtn.style.borderRadius="50px";
-rsvpBtn.style.cursor="pointer"; rsvpBtn.style.zIndex="100"; document.body.appendChild(rsvpBtn);
+rsvpBtn.style.position="fixed"; 
+rsvpBtn.style.bottom="20px"; 
+rsvpBtn.style.right="20px";
+rsvpBtn.style.background="#f4c542"; 
+rsvpBtn.style.padding="12px 20px"; 
+rsvpBtn.style.border="none"; 
+rsvpBtn.style.borderRadius="50px";
+rsvpBtn.style.cursor="pointer"; 
+rsvpBtn.style.zIndex="100"; 
+document.body.appendChild(rsvpBtn);
+
 const rsvpModal=document.getElementById("rsvp-modal");
-rsvpBtn.addEventListener("click",()=>{ rsvpModal.classList.add("show"); });
-rsvpModal.addEventListener("click",e=>{ if(e.target===rsvpModal) rsvpModal.classList.remove("show"); });
-document.getElementById("rsvp-form").addEventListener("submit",e=>{ e.preventDefault(); alert("Terima kasih! RSVP anda telah dihantar."); rsvpModal.classList.remove("show"); });
+rsvpBtn.addEventListener("click",()=>{ 
+  rsvpModal.classList.add("show"); 
+});
+rsvpModal.addEventListener("click",e=>{ 
+  if(e.target===rsvpModal) rsvpModal.classList.remove("show"); 
+});
+
+document.getElementById("rsvp-form").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=document.getElementById("name").value;
+  const attend=document.getElementById("attend").value;
+
+  // URL Web App dari Google Apps Script (tukar yang bawah ni dengan URL anda sendiri)
+  const scriptURL = "PASTE_URL_WEB_APP_DI_SINI";
+
+  fetch(scriptURL, {
+    method:"POST",
+    body:JSON.stringify({ name, attend }),
+    headers:{ "Content-Type":"application/json" }
+  })
+  .then(res=>res.text())
+  .then(res=>{
+    alert("Terima kasih! RSVP anda telah dihantar.");
+    document.getElementById("rsvp-form").reset();
+    rsvpModal.classList.remove("show");
+  })
+  .catch(err=>{
+    alert("Maaf, ada masalah: " + err);
+  });
+});
 </script>
 </body>
 </html>

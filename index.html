@@ -3,222 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jemputan Majlis Perkahwinan Ultimate</title>
+<title>Jemputan Majlis Perkahwinan Premium</title>
 <style>
-/* BODY & BACKGROUND */
-body {
-  margin:0;
-  font-family:'Georgia', serif;
-  overflow-x:hidden;
-  text-align:center;
-  color:#1e3a5f;
-  position:relative;
-}
+/* BODY */
+body, html { margin:0; padding:0; width:100%; height:100%; font-family:'Georgia', serif; color:#1e3a5f; overflow-x:hidden; }
 
 /* VIDEO BACKGROUND */
-#bg-video {
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  object-fit:cover;
-  z-index:-3;
-  opacity:0.85;
-}
+#bg-video { position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-3; }
+.overlay { position:relative; z-index:2; backdrop-filter:blur(12px); background:rgba(255,255,255,0.25); min-height:100vh; padding:40px 20px; border-radius:25px; box-shadow:0 10px 30px rgba(0,0,0,0.2); text-align:center; }
 
-/* OVERLAY */
-.overlay {
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(15px);
-  min-height:100vh;
-  padding:40px 20px;
-  border-radius:25px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
-  position:relative;
-  z-index:2;
-}
-
-/* HEADER & NAMA */
-h1, .initials, .names, .date, .countdown {
-  opacity:0;
-  transform:translateY(30px);
-  transition: all 1s ease;
-}
-h1 { 
-  font-size:38px; margin-bottom:20px; letter-spacing:4px; font-weight:bold; color:#1a2e4b;
-}
-.initials { 
-  font-size:110px; font-weight:bold; margin:10px 0; 
-  background:linear-gradient(90deg,#f4c542,#fff); 
-  -webkit-background-clip:text; color:transparent; animation: shimmer 2s infinite; 
-}
-.names { font-size:36px; margin:5px 0 20px; font-weight:bold; letter-spacing:1px; }
+/* HEADER */
+h1, .initials, .names, .date, .countdown { opacity:0; transform:translateY(30px); transition: all 1s ease; }
+h1 { font-size:38px; margin-bottom:20px; letter-spacing:4px; font-weight:bold; background:linear-gradient(90deg,#f4c542,#fff); -webkit-background-clip:text; color:transparent; animation:shimmer 3s infinite; }
+.initials { font-size:110px; font-weight:bold; margin:10px 0; background:linear-gradient(90deg,#f4c542,#fff); -webkit-background-clip:text; color:transparent; animation:shimmer 2s infinite; }
+.names { font-size:36px; margin:5px 0 20px; font-weight:bold; letter-spacing:1px; background:linear-gradient(90deg,#f4c542,#fff); -webkit-background-clip:text; color:transparent; animation:shimmer 2s infinite; }
 .date, .countdown { font-size:20px; margin:12px 0; font-weight:600; }
+@keyframes shimmer{0%{background-position:-200px 0;}100%{background-position:200px 0;}}
 
-/* SHIMMER EFFECT */
-@keyframes shimmer{
-  0%{background-position:-200px 0;}
-  100%{background-position:200px 0;}
-}
 .show{ opacity:1; transform:translateY(0); }
 
 /* SECTION */
-section{
-  margin:40px 0;
-  padding:25px;
-  background: rgba(255,255,255,0.35);
-  border-radius:20px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.1);
-  opacity:0;
-  transform:translateY(20px);
-  transition: all 1s ease;
-  line-height:1.8;
-}
+section{ margin:40px 0 0 0; padding:25px; background: rgba(255,255,255,0.35); border-radius:20px; box-shadow:0 5px 20px rgba(0,0,0,0.1); opacity:0; transform:translateY(20px); transition: all 1s ease; line-height:1.8; }
 
 /* UL LIST */
 ul { list-style:none; padding:0; font-size:17px; line-height:1.9; max-width:450px; margin:0 auto; text-align:left; }
 
 /* AUDIO */
-audio { display:none; }
-
-/* BUTTON MUSIC */
-#music-btn {
-  position: fixed;
-  top:20px;
-  right:20px;
-  background:#f4c542;
-  border:none;
-  padding:12px 18px;
-  border-radius:50px;
-  font-weight:bold;
-  cursor:pointer;
-  box-shadow:0 4px 12px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-  z-index:100;
-}
-#music-btn:hover { transform:scale(1.1); }
-
-/* BUTTON RSVP */
-#rsvp-btn {
-  position: fixed;
-  top:70px;
-  right:20px;
-  background:#1a2e4b;
-  color:white;
-  border:none;
-  padding:12px 18px;
-  border-radius:50px;
-  font-weight:bold;
-  cursor:pointer;
-  box-shadow:0 4px 12px rgba(0,0,0,0.2);
-  z-index:100;
-}
-#rsvp-btn:hover { transform:scale(1.1); }
+audio{ display:none; }
 
 /* MODAL RSVP */
-#rsvp-modal {
-  position:fixed;
-  top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.7);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:200;
-}
-#rsvp-modal .modal-content {
-  background:white;
-  padding:30px;
-  border-radius:20px;
-  text-align:left;
-  max-width:400px;
-  width:90%;
-}
-#rsvp-modal label { display:block; margin:10px 0 5px; font-weight:bold; }
-#rsvp-modal input, #rsvp-modal select { width:100%; padding:8px; margin-bottom:15px; border-radius:5px; border:1px solid #ccc; }
+#rsvp-modal{ position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; justify-content:center; align-items:center; z-index:200; opacity:0; pointer-events:none; transition: all 0.4s ease; }
+#rsvp-modal.show{ opacity:1; pointer-events:auto; }
+#rsvp-modal .modal-content{ background:white; padding:30px; border-radius:20px; text-align:left; max-width:400px; width:90%; transform: scale(0.7); transition: transform 0.4s ease; }
+#rsvp-modal.show .modal-content{ transform: scale(1); }
+#rsvp-modal label{ display:block; margin:10px 0 5px; font-weight:bold; }
+#rsvp-modal input, #rsvp-modal select{ width:100%; padding:8px; margin-bottom:15px; border-radius:5px; border:1px solid #ccc; }
 
-/* FIREWORKS CANVAS */
-#fireworks-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; }
-
-/* DOA */
-.doa {
-  margin-top:40px; padding:25px; background: rgba(255,255,255,0.35);
-  border-radius:20px; font-style:italic; font-size:18px; line-height:1.8; color:#1e3a5f;
-  border:2px solid rgba(30,58,95,0.2); backdrop-filter:blur(5px);
-  opacity:0; transform:translateY(20px); transition: all 1s ease;
-}
-
-/* KELOPAK BUNGA 3D */
-.petal {
-  position: fixed;
-  top: -10vh;
-  background-image: url('petal.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  width:35px; height:35px;
-  opacity:0.9;
-  z-index:-2;
-  animation: fall linear infinite, glitter 1.5s ease-in-out infinite alternate;
-}
-@keyframes fall{
-  0%{transform:translateY(-10vh) rotateX(0deg) rotateY(0deg); opacity:1;}
-  100%{transform:translateY(110vh) rotateX(360deg) rotateY(360deg); opacity:0.3;}
-}
-@keyframes glitter{
-  0%{ box-shadow:0 0 0px rgba(255,255,255,0);}
-  50%{ box-shadow:0 0 10px rgba(255,255,255,0.6);}
-  100%{ box-shadow:0 0 0px rgba(255,255,255,0);}
-}
+/* KELOPAK BUNGA */
+.petal{ position: fixed; top:-10vh; background-image:url('petal.png'); background-size:contain; background-repeat:no-repeat; width:35px; height:35px; opacity:0.9; z-index:-2; animation:fall linear infinite, glitter 1.5s ease-in-out infinite alternate; }
+@keyframes fall{0%{transform:translateY(-10vh) rotateX(0deg) rotateY(0deg); opacity:1;}100%{transform:translateY(110vh) rotateX(360deg) rotateY(360deg); opacity:0.3;}}
+@keyframes glitter{0%{ box-shadow:0 0 0px rgba(255,255,255,0);}50%{ box-shadow:0 0 10px rgba(255,255,255,0.6);}100%{ box-shadow:0 0 0px rgba(255,255,255,0);}}
 
 /* GALERI PENGANTIN */
-.bride-groom-container {
-  overflow-x:hidden; white-space:nowrap; margin:30px 0; position:relative;
-}
-.bride-groom-container img {
-  height:200px; margin:0 10px; display:inline-block;
-  border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.15);
-  transition: transform 0.5s ease;
-}
-.bride-groom-container img:hover { transform: scale(1.05); }
+.bride-groom-container{ overflow-x:hidden; white-space:nowrap; margin:30px 0; position:relative; }
+.bride-groom-container img{ height:200px; margin:0 10px; display:inline-block; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.15); transition: transform 0.5s ease; }
+.bride-groom-container img:hover{ transform: scale(1.05); }
+
+/* DOA */
+.doa{ margin-top:40px; padding:25px; background: rgba(255,255,255,0.35); border-radius:20px; font-style:italic; font-size:18px; line-height:1.8; color:#1e3a5f; border:2px solid rgba(30,58,95,0.2); backdrop-filter:blur(5px); opacity:0; transform:translateY(20px); transition: all 1s ease; }
 
 /* HUBUNGI KAMI */
-.contact {
-  margin:50px 0 20px 0;
-  padding:25px;
-  background: rgba(255,255,255,0.35);
-  border-radius:20px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.08);
-  font-size:18px;
-  line-height:1.8;
-}
-.contact h2 { margin-bottom:15px; font-size:24px; color:#1e3a5f; }
-.contact p { margin:5px 0; }
-.contact a { color:#1e3a5f; text-decoration:none; font-weight:bold; }
+.contact{ margin:0; padding:25px; background: rgba(255,255,255,0.35); border-radius:20px; box-shadow:0 4px 12px rgba(0,0,0,0.08); font-size:18px; line-height:1.8; }
+.contact h2{ margin-bottom:15px; font-size:24px; color:#1e3a5f; }
+.contact p{ margin:5px 0; }
+.contact a{ color:#1e3a5f; text-decoration:none; font-weight:bold; }
 
-/* SOSIAL MEDIA ICONS */
-.social-icons {
-  margin-top:20px;
-}
-.social-icons a {
-  margin:0 10px; font-size:24px; color:#1e3a5f; text-decoration:none;
-  transition: transform 0.3s;
-}
-.social-icons a:hover { transform:scale(1.2); }
+/* FIREWORKS */
+#fireworks-canvas{ position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; }
+
 </style>
 </head>
 <body>
 
-<!-- BUTTONS -->
-<button id="music-btn">▶ Muzik</button>
-<button id="rsvp-btn">RSVP</button>
-
 <!-- VIDEO BACKGROUND -->
 <video id="bg-video" autoplay muted loop>
-  <source src="background.mp4" type="video/mp4">
+  <source src="bunga.mp4" type="video/mp4">
 </video>
 
-<!-- FIREWORKS CANVAS -->
-<canvas id="fireworks-canvas"></canvas>
+<!-- AUDIO AUTO-PLAY -->
+<audio id="bg-music" loop autoplay>
+  <source src="lagu.mp3" type="audio/mpeg">
+</audio>
 
-<!-- KELAPA BUNGA -->
+<!-- FIREWORKS & PETAL -->
+<canvas id="fireworks-canvas"></canvas>
 <div id="petals"></div>
 
 <div class="overlay">
@@ -246,21 +104,8 @@ audio { display:none; }
 
   <section id="lokasi">
     <h2>Lokasi Majlis: Kampung Lihak-Lihak</h2>
-    <iframe 
-      src="https://www.google.com/maps?q=Kampung+Lihak-Lihak,Semporna,Sabah,Malaysia&output=embed" 
-      width="100%" height="300" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy">
-    </iframe>
+    <iframe src="https://www.google.com/maps?q=Kampung+Lihak-Lihak,Semporna,Sabah,Malaysia&output=embed" width="100%" height="300" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
     <p><a href="https://maps.app.goo.gl/NFDc4EYY1E2N9ppx5" target="_blank">Buka dalam Google Maps</a></p>
-  </section>
-
-  <section class="doa">
-    <h2>Doa Pengantin</h2>
-    <p>"Ya Allah, berkatilah majlis ini dengan keberkatan dari-Mu,  
-    limpahkanlah kasih sayang antara kedua mempelai ini,  
-    satukanlah mereka dalam kebaikan dan lindungilah mereka  
-    dari segala keburukan. Jadikanlah rumahtangga mereka  
-    sakinah, mawaddah, wa rahmah."</p>
-    <p><strong>آمِيْن يَا رَبَّ الْعَالَمِيْن</strong></p>
   </section>
 
   <section class="contact">
@@ -268,11 +113,11 @@ audio { display:none; }
     <p>Email: <a href="mailto:mickeymikapple@gmail.com">mickeymikapple@gmail.com</a></p>
     <p>WhatsApp: <a href="https://wa.me/60149236577" target="_blank">Mik</a></p>
     <p>WhatsApp: <a href="https://wa.me/60166234337" target="_blank">Fazrinah</a></p>
-    <div class="social-icons">
-      <a href="https://instagram.com" target="_blank">📸</a>
-      <a href="mailto:mickeymikapple@gmail.com">✉️</a>
-      <a href="https://wa.me/60149236577" target="_blank">💬</a>
-    </div>
+  </section>
+
+  <section class="doa">
+    <h2>Doa Pengantin</h2>
+    <p>"Ya Allah, berkatilah majlis ini..."</p>
   </section>
 </div>
 
@@ -293,170 +138,43 @@ audio { display:none; }
   </div>
 </div>
 
-<audio id="bg-music" loop>
-  <source src="lagu.mp3" type="audio/mpeg">
-</audio>
-
 <script>
-// ANIMASI HEADER & NAMA
-const animOrder = ['title','initials','names','date','countdown'];
-animOrder.forEach((id,i)=>{
-  setTimeout(()=>{ document.getElementById(id).classList.add('show'); }, i*600);
-});
+// ANIMASI HEADER
+['title','initials','names','date','countdown'].forEach((id,i)=>{ setTimeout(()=>{ document.getElementById(id).classList.add('show'); }, i*600); });
 
 // COUNTDOWN
-const countdown = document.getElementById("countdown");
-const weddingDate = new Date("Jan 22, 2025 11:00:00").getTime();
-function updateCountdown(){
-  const now = new Date().getTime();
-  const distance = weddingDate - now;
-  if(distance<0){countdown.innerHTML="Majlis telah bermula 🎉"; return;}
-  const days=Math.floor(distance/(1000*60*60*24));
-  const hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-  const minutes=Math.floor((distance%(1000*60*60))/(1000*60));
-  const seconds=Math.floor((distance%(1000*60))/1000);
-  countdown.innerHTML=`${days} Hari ${hours} Jam ${minutes} Minit ${seconds} Saat lagi`;
-}
-setInterval(updateCountdown,1000); 
-updateCountdown();
+const countdown=document.getElementById("countdown");
+const weddingDate=new Date("Jan 22, 2025 11:00:00").getTime();
+function updateCountdown(){ const now=new Date().getTime(); const distance=weddingDate-now; if(distance<0){countdown.innerHTML="Majlis telah bermula 🎉"; return;} const days=Math.floor(distance/(1000*60*60*24)); const hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60)); const minutes=Math.floor((distance%(1000*60*60))/(1000*60)); const seconds=Math.floor((distance%(1000*60))/1000); countdown.innerHTML=`${days} Hari ${hours} Jam ${minutes} Minit ${seconds} Saat lagi`; }
+setInterval(updateCountdown,1000); updateCountdown();
 
-// KELOPAK BUNGA 3D
-const petalsContainer = document.getElementById("petals");
-function createPetal(){
-  const petal = document.createElement("div");
-  petal.classList.add("petal");
-  petal.style.left = Math.random() * 100 + "vw";
-  petal.style.animationDuration = (5 + Math.random() * 5) + "s";
-  petal.style.opacity = 0.5 + Math.random() * 0.5;
-  const size = 25 + Math.random() * 30;
-  petal.style.width = size + 'px';
-  petal.style.height = size + 'px';
-  petal.style.transform = `rotateX(${Math.random()*360}deg) rotateY(${Math.random()*360}deg)`;
-  petalsContainer.appendChild(petal);
-  setTimeout(() => { petal.remove(); }, 12000);
-}
-setInterval(createPetal, 200);
+// AUDIO
+const music=document.getElementById("bg-music"); music.volume=0.5; music.play().catch(()=>{});
 
-// AUDIO START/PAUSE BUTTON
-const music = document.getElementById("bg-music");
-music.volume = 0.5;
-const musicBtn = document.getElementById("music-btn");
-let playing = false;
-musicBtn.addEventListener("click", ()=>{
-  if(!playing){ music.play().catch(()=>{}); musicBtn.textContent='⏸ Muzik'; playing=true; }
-  else { music.pause(); musicBtn.textContent='▶ Muzik'; playing=false; }
-});
+// PETAL
+const petalsContainer=document.getElementById("petals");
+function createPetal(){ const petal=document.createElement("div"); petal.classList.add("petal"); petal.style.left=Math.random()*100+"vw"; petal.style.animationDuration=(5+Math.random()*5)+"s"; petal.style.opacity=0.5+Math.random()*0.5; const size=25+Math.random()*30; petal.style.width=size+'px'; petal.style.height=size+'px'; petal.style.transform=`rotateX(${Math.random()*360}deg) rotateY(${Math.random()*360}deg)`; petalsContainer.appendChild(petal); setTimeout(()=>{ petal.remove(); },12000); }
+setInterval(createPetal,200);
 
-// SCROLL GALERI PENGANTIN
-const gallery = document.getElementById("scroll-gallery");
-let scrollPos = 0;
-function scrollGallery(){
-  scrollPos += 0.8;
-  if(scrollPos > gallery.scrollWidth - gallery.clientWidth) scroll
-// SCROLL GALERI PENGANTIN (sambungan)
-  gallery.scrollTo({ left: scrollPos, behavior: "smooth" });
-}
-setInterval(scrollGallery, 40);
+// SCROLL GALERI
+const gallery=document.getElementById("scroll-gallery"); let scrollPos=0; function scrollGallery(){ scrollPos+=0.8; if(scrollPos>gallery.scrollWidth-gallery.clientWidth) scrollPos=0; gallery.scrollTo({ left:scrollPos, behavior:"smooth" }); } setInterval(scrollGallery,40);
 
-// OBSERVER UNTUK SECTION & DOA
-const elements = document.querySelectorAll("section,.doa");
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting) entry.target.classList.add("show");
-  });
-}, { threshold: 0.2 });
-elements.forEach(el => observer.observe(el));
+// OBSERVER SECTION
+document.querySelectorAll("section,.doa").forEach(el=>{ new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("show"); });},{threshold:0.2}).observe(el); });
 
-// MODAL RSVP
-const rsvpBtn = document.getElementById("rsvp-btn");
-const rsvpModal = document.getElementById("rsvp-modal");
-rsvpBtn.addEventListener("click", ()=>{ rsvpModal.style.display="flex"; });
-rsvpModal.addEventListener("click", (e)=>{
-  if(e.target===rsvpModal) rsvpModal.style.display="none";
-});
-document.getElementById("rsvp-form").addEventListener("submit", e=>{
-  e.preventDefault();
-  alert("Terima kasih! RSVP anda telah dihantar.");
-  rsvpModal.style.display="none";
-});
+// RSVP MODAL
+const rsvpBtn=document.createElement("button"); rsvpBtn.textContent="RSVP"; rsvpBtn.style.position="fixed"; rsvpBtn.style.bottom="20px"; rsvpBtn.style.right="20px"; rsvpBtn.style.background="#f4c542"; rsvpBtn.style.padding="12px 20px"; rsvpBtn.style.border="none"; rsvpBtn.style.borderRadius="50px"; rsvpBtn.style.cursor="pointer"; rsvpBtn.style.zIndex="100"; document.body.appendChild(rsvpBtn);
+const rsvpModal=document.getElementById("rsvp-modal");
+rsvpBtn.addEventListener("click",()=>{rsvpModal.classList.add("show");});
+rsvpModal.addEventListener("click",e=>{ if(e.target===rsvpModal) rsvpModal.classList.remove("show");});
+document.getElementById("rsvp-form").addEventListener("submit",e=>{ e.preventDefault(); alert("Terima kasih! RSVP anda telah dihantar."); rsvpModal.classList.remove("show"); });
 
-// FIREWORKS SIMPLE
-const canvas = document.getElementById("fireworks-canvas");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-window.addEventListener("resize", ()=>{ canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
-
+// FIREWORKS
+const canvas=document.getElementById("fireworks-canvas"); const ctx=canvas.getContext("2d"); canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+window.addEventListener("resize",()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
 function random(min,max){ return Math.random()*(max-min)+min; }
-class Firework{
-  constructor(){
-    this.x=random(0,canvas.width);
-    this.y=canvas.height;
-    this.targetY=random(canvas.height/4,canvas.height/2);
-    this.radius=2;
-    this.color=`hsl(${random(0,360)},100%,60%)`;
-    this.speed=2+Math.random()*3;
-    this.exploded=false;
-    this.particles=[];
-  }
-  update(){
-    if(!this.exploded){
-      this.y -= this.speed;
-      if(this.y <= this.targetY) this.explode();
-    } else {
-      this.particles.forEach(p=>{
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.05;
-        p.alpha -= 0.02;
-      });
-      this.particles = this.particles.filter(p=>p.alpha>0);
-    }
-  }
-  explode(){
-    this.exploded=true;
-    for(let i=0;i<50;i++){
-      const angle=Math.random()*2*Math.PI;
-      const speed=random(2,5);
-      this.particles.push({
-        x:this.x,
-        y:this.y,
-        vx:Math.cos(angle)*speed,
-        vy:Math.sin(angle)*speed,
-        alpha:1,
-        color:`hsl(${random(0,360)},100%,60%)`
-      });
-    }
-  }
-  draw(){
-    if(!this.exploded){
-      ctx.beginPath();
-      ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
-      ctx.fillStyle=this.color;
-      ctx.fill();
-    } else {
-      this.particles.forEach(p=>{
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,2,0,Math.PI*2);
-        ctx.fillStyle=`rgba(${p.color},${p.alpha})`;
-        ctx.fillStyle = p.color.replace("hsl","hsla").replace(")",`,${p.alpha})`);
-        ctx.fill();
-      });
-    }
-  }
-}
-let fireworks = [];
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  if(Math.random()<0.03) fireworks.push(new Firework());
-  fireworks.forEach(f=>{
-    f.update();
-    f.draw();
-  });
-  fireworks = fireworks.filter(f=>!f.exploded || f.particles.length>0);
-  requestAnimationFrame(animate);
-}
-animate();
+class Firework{constructor(){this.x=random(0,canvas.width);this.y=canvas.height;this.targetY=random(canvas.height/4,canvas.height/2);this.radius=2;this.color=`hsl(${random(0,360)},100%,60%)`;this.speed=2+Math.random()*3;this.exploded=false;this.particles=[];} update(){if(!this.exploded){this.y-=this.speed;if(this.y<=this.targetY)this.explode();}else{this.particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.05;p.alpha-=0.02;});this.particles=this.particles.filter(p=>p.alpha>0);} } explode(){this.exploded=true;for(let i=0;i<50;i++){this.particles.push({x:this.x,y:this.y,vx=random(-4,4),vy=random(-4,4),color:`hsl(${random(0,360)},100%,60%)`,alpha:1}); } } draw(){if(!this.exploded){ctx.beginPath();ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);ctx.fillStyle=this.color;ctx.fill();}else{this.particles.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,2,0,Math.PI*2);ctx.fillStyle=p.color.replace("hsl","hsla").replace(")",`,`+p.alpha+")");ctx.fill();});}}}
+let fireworks=[]; function animate(){ctx.clearRect(0,0,canvas.width,canvas.height); if(Math.random()<0.03) fireworks.push(new Firework()); fireworks.forEach(f=>{f.update();f.draw();}); fireworks=fireworks.filter(f=>!f.exploded||f.particles.length>0); requestAnimationFrame(animate);} animate();
 </script>
 </body>
 </html>

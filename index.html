@@ -3,170 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jemputan Majlis Perkahwinan Premium</title>
+<title>Jemputan Majlis Perkahwinan</title>
 <style>
-body, html { margin:0; padding:0; width:100%; height:100%; font-family:'Georgia', serif; color:#1e3a5f; overflow-x:hidden; }
-#bg-video {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: auto;
-  height: 100%;
-  min-width: 100%;
-  min-height: 100%;
-  transform: translate(-50%, -50%);
-  object-fit: contain;
-  z-index: -3;
-}
-.overlay { position:relative; z-index:2; backdrop-filter:blur(12px); background:rgba(255,255,255,0.25); min-height:100vh; padding:40px 20px; border-radius:25px; box-shadow:0 10px 30px rgba(0,0,0,0.2); text-align:center; }
+body, html { margin:0; padding:0; width:100%; height:100%; font-family:'Georgia', serif; color:#1e3a5f; overflow-x:hidden; background: url('bg.jpg') center/cover no-repeat; }
+.overlay { position:relative; z-index:2; background:rgba(255,255,255,0.3); min-height:100vh; padding:40px 20px; border-radius:25px; box-shadow:0 10px 30px rgba(0,0,0,0.2); text-align:center; }
 
-/* 🎀 FRAME INVITE DENGAN ANIMASI */
-.invite-frame {
-  display: inline-block;
-  padding: 30px 40px;
-  margin: 20px auto;
-  border: 3px solid transparent;
-  border-radius: 25px;
-  background: rgba(255, 255, 255, 0.25);
-  background-clip: padding-box;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  position: relative;
-  overflow: hidden;
-}
-.invite-frame::before {
-  content: "";
-  position: absolute;
-  top: -3px; left: -3px; right: -3px; bottom: -3px;
-  border-radius: 25px;
-  background: linear-gradient(
-    120deg, 
-    #d4af37, 
-    #f7e9a0, 
-    #fff8d0, 
-    #d4af37
-  );
-  background-size: 300% 300%;
-  animation: shine 6s linear infinite;
-  z-index: -1;
-}
-
-@keyframes shine {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
+/* FRAME INVITE */
+.invite-frame { display:inline-block; padding:25px 30px; margin:20px auto; border:3px solid transparent; border-radius:25px; background: rgba(255,255,255,0.25); background-clip:padding-box; box-shadow:0 8px 25px rgba(0,0,0,0.15); position:relative; overflow:hidden; }
+.invite-frame::before { content:""; position:absolute; top:-3px; left:-3px; right:-3px; bottom:-3px; border-radius:25px; background: linear-gradient(120deg,#d4af37,#f7e9a0,#fff8d0,#d4af37); background-size:300% 300%; animation:shine 6s linear infinite; z-index:-1; }
+@keyframes shine {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 h1, .initials, .names, .date, .countdown { opacity:0; transform:translateY(30px); transition: all 1s ease; }
-h1 { font-size:38px; margin-bottom:20px; letter-spacing:4px; font-weight:bold; }
-.initials { font-size:110px; font-weight:bold; margin:10px 0; }
-.names { font-size:36px; margin:5px 0 20px; font-weight:bold; }
-.date, .countdown { font-size:20px; margin:12px 0; font-weight:600; }
+h1 { font-size:32px; margin-bottom:20px; letter-spacing:3px; font-weight:bold; }
+.initials { font-size:80px; font-weight:bold; margin:10px 0; }
+.names { font-size:28px; margin:5px 0 20px; font-weight:bold; }
+.date, .countdown { font-size:16px; margin:8px 0; font-weight:600; }
 .show{ opacity:1; transform:translateY(0); }
 
-section{ margin:40px 0 0 0; padding:25px; background: rgba(255,255,255,0.35); border-radius:20px; box-shadow:0 5px 20px rgba(0,0,0,0.1); opacity:0; transform:translateY(20px); transition: all 1s ease; line-height:1.8; }
-ul { list-style:none; padding:0; font-size:17px; line-height:1.9; max-width:450px; margin:0 auto; text-align:left; }
+/* SLIDESHOW */
+.slideshow-container { position:relative; max-width:400px; margin:20px auto; overflow:hidden; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.15); }
+.slideshow-container img { width:100%; height:auto; display:none; border-radius:15px; transition:opacity 1s ease-in-out; }
+.slideshow-container img.active { display:block; opacity:1; }
+.prev, .next { position:absolute; top:50%; transform:translateY(-50%); color:#fff; font-size:24px; padding:10px; border-radius:50%; background: rgba(0,0,0,0.3); cursor:pointer; user-select:none; z-index:10; }
+.prev { left:10px; }
+.next { right:10px; }
+.dots { text-align:center; margin-top:10px; }
+.dot { display:inline-block; width:10px; height:10px; margin:0 5px; background:#ddd; border-radius:50%; cursor:pointer; }
+.dot.active { background:#f4c542; }
 
-/* modal RSVP */
-#rsvp-modal{ position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; justify-content:center; align-items:center; z-index:200; opacity:0; pointer-events:none; transition: all 0.4s ease; }
-#rsvp-modal.show{ opacity:1; pointer-events:auto; }
-#rsvp-modal .modal-content{ background:white; padding:30px; border-radius:20px; text-align:left; max-width:400px; width:90%; transform: scale(0.7); transition: transform 0.4s ease; }
-#rsvp-modal.show .modal-content{ transform: scale(1); }
-#rsvp-modal label{ display:block; margin:10px 0 5px; font-weight:bold; }
-#rsvp-modal input, #rsvp-modal select{ width:100%; padding:8px; margin-bottom:15px; border-radius:5px; border:1px solid #ccc; }
-
-.petal{ position: fixed; top:-10vh; background-image:url('petal.png'); background-size:contain; background-repeat:no-repeat; width:35px; height:35px; opacity:0.9; z-index:-2; animation:fall linear infinite, glitter 1.5s ease-in-out infinite alternate; }
-@keyframes fall{0%{transform:translateY(-10vh) rotateX(0deg) rotateY(0deg); opacity:1;}100%{transform:translateY(110vh) rotateX(360deg) rotateY(360deg); opacity:0.3;}}
-@keyframes glitter{0%{ box-shadow:0 0 0px rgba(255,255,255,0);}50%{ box-shadow:0 0 10px rgba(255,255,255,0.6);}100%{ box-shadow:0 0 0px rgba(255,255,255,0);}}
-
-.bride-groom-container{ overflow-x:hidden; white-space:nowrap; margin:30px 0; position:relative; }
-.bride-groom-container img{ height:200px; margin:0 10px; display:inline-block; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.15); transition: transform 0.5s ease; }
-.bride-groom-container img:hover{ transform: scale(1.05); }
-
-.contact{ 
-  margin:40px 0 0 0;   
-  padding:25px; 
-  background: rgba(255,255,255,0.35); 
-  border-radius:20px; 
-  box-shadow:0 4px 12px rgba(0,0,0,0.08); 
-  font-size:18px; 
-  line-height:1.8; 
-}
-.contact h2{ margin-bottom:15px; font-size:24px; color:#1e3a5f; }
+/* SECTION */
+section { margin:30px 0 0 0; padding:20px; background: rgba(255,255,255,0.35); border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); opacity:0; transform:translateY(20px); transition: all 1s ease; line-height:1.6; }
+ul { list-style:none; padding:0; font-size:15px; line-height:1.8; max-width:400px; margin:0 auto; text-align:left; }
+.contact{ margin:30px 0 0 0; padding:20px; background: rgba(255,255,255,0.35); border-radius:15px; box-shadow:0 4px 12px rgba(0,0,0,0.08); font-size:16px; line-height:1.6; }
+.contact h2{ margin-bottom:10px; font-size:20px; color:#1e3a5f; }
 .contact p{ margin:5px 0; }
 .contact a{ color:#1e3a5f; text-decoration:none; font-weight:bold; }
 
-/* 📱 Responsive untuk frame */
-@media (max-width: 768px) {
-  .invite-frame {
-    padding: 20px 25px;
-    margin: 15px auto;
-    border-radius: 18px;
-  }
-  .invite-frame h1 {
-    font-size: 28px;
-  }
-  .invite-frame .initials {
-    font-size: 70px;
-  }
-  .invite-frame .names {
-    font-size: 24px;
-  }
-  .invite-frame .date,
-  .invite-frame .countdown {
-    font-size: 16px;
-  }
-}
+/* RSVP MODAL */
+#rsvp-modal{ position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; justify-content:center; align-items:center; z-index:200; opacity:0; pointer-events:none; transition: all 0.4s ease; }
+#rsvp-modal.show{ opacity:1; pointer-events:auto; }
+#rsvp-modal .modal-content{ background:white; padding:20px; border-radius:15px; text-align:left; max-width:350px; width:90%; transform: scale(0.7); transition: transform 0.4s ease; }
+#rsvp-modal.show .modal-content{ transform: scale(1); }
+#rsvp-modal label{ display:block; margin:8px 0 4px; font-weight:bold; }
+#rsvp-modal input, #rsvp-modal select{ width:100%; padding:6px; margin-bottom:12px; border-radius:5px; border:1px solid #ccc; }
 
-@media (max-width: 480px) {
-  .invite-frame {
-    padding: 15px 18px;
-    margin: 10px auto;
-    border-radius: 15px;
-  }
-  .invite-frame h1 {
-    font-size: 22px;
-  }
-  .invite-frame .initials {
-    font-size: 50px;
-  }
-  .invite-frame .names {
-    font-size: 20px;
-  }
-  .invite-frame .date,
-  .invite-frame .countdown {
-    font-size: 14px;
-  }
-}
+/* MEDIA */
+@media (max-width:480px){ h1{font-size:22px;} .initials{font-size:50px;} .names{font-size:18px;} .date,.countdown{font-size:12px;} .prev,.next{font-size:18px; padding:6px;} }
 </style>
 </head>
 <body>
-
-<video id="bg-video" autoplay muted loop>
-  <source src="bunga.mp4" type="video/mp4">
-</video>
 
 <audio id="bg-music" loop>
   <source src="lagu.mp3" type="audio/mpeg">
 </audio>
 
-<div id="petals"></div>
-
 <div class="overlay">
-
-  <!-- 🎀 FRAME INVITE START -->
   <div class="invite-frame">
     <h1 id="title">Jemputan Majlis Perkahwinan</h1>
     <div class="initials" id="initials">O & A</div>
     <div class="names" id="names">Omar & Alia</div>
     <div class="date" id="date">22 . 01 . 2025</div>
     <div class="countdown" id="countdown"></div>
-  </div>
-  <!-- 🎀 FRAME INVITE END -->
 
-  <div class="bride-groom-container" id="scroll-gallery">
-    <img src="pengantin1.jpg" alt="Pengantin 1">
-    <img src="pengantin2.jpg" alt="Pengantin 2">
-    <img src="pengantin3.jpg" alt="Pengantin 3">
+    <!-- SLIDESHOW -->
+    <div class="slideshow-container" id="slideshow">
+      <img src="pengantin1.jpg" class="active" alt="Pengantin 1">
+      <img src="pengantin2.jpg" alt="Pengantin 2">
+      <img src="pengantin3.jpg" alt="Pengantin 3">
+      <span class="prev">&#10094;</span>
+      <span class="next">&#10095;</span>
+      <div class="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
   </div>
 
   <section>
@@ -181,7 +91,7 @@ ul { list-style:none; padding:0; font-size:17px; line-height:1.9; max-width:450p
 
   <section id="lokasi">
     <h2>Lokasi Majlis: Kampung Lihak-Lihak</h2>
-    <iframe src="https://www.google.com/maps?q=Kampung+Lihak-Lihak,Semporna,Sabah,Malaysia&output=embed" width="100%" height="300" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
+    <iframe src="https://www.google.com/maps?q=Kampung+Lihak-Lihak,Semporna,Sabah,Malaysia&output=embed" width="100%" height="250" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
     <p><a href="https://maps.app.goo.gl/NFDc4EYY1E2N9ppx5" target="_blank">Buka dalam Google Maps</a></p>
   </section>
 
@@ -193,6 +103,7 @@ ul { list-style:none; padding:0; font-size:17px; line-height:1.9; max-width:450p
   </section>
 </div>
 
+<!-- RSVP MODAL -->
 <div id="rsvp-modal">
   <div class="modal-content">
     <h2>RSVP Jemputan</h2>
@@ -204,7 +115,7 @@ ul { list-style:none; padding:0; font-size:17px; line-height:1.9; max-width:450p
         <option value="ya">Ya</option>
         <option value="tidak">Tidak</option>
       </select>
-      <button type="submit" style="background:#1a2e4b;color:white;padding:10px 20px;border:none;border-radius:10px;">Hantar</button>
+      <button type="submit" style="background:#1a2e4b;color:white;padding:8px 16px;border:none;border-radius:10px;">Hantar</button>
     </form>
   </div>
 </div>
@@ -212,7 +123,7 @@ ul { list-style:none; padding:0; font-size:17px; line-height:1.9; max-width:450p
 <script>
 // HEADER ANIMASI
 ['title','initials','names','date','countdown'].forEach((id,i)=>{
-  setTimeout(()=>{ document.getElementById(id).classList.add('show'); }, i*600);
+  setTimeout(()=>{ document.getElementById(id).classList.add('show'); }, i*500);
 });
 
 // COUNTDOWN
@@ -221,83 +132,55 @@ const weddingDate = new Date("Jan 22, 2025 11:00:00").getTime();
 function updateCountdown(){
   const now = new Date().getTime();
   const distance = weddingDate - now;
-  if(distance < 0){
-    countdown.innerHTML = "Majlis telah bermula 🎉";
-    return;
-  }
+  if(distance < 0){ countdown.innerHTML = "Majlis telah bermula 🎉"; return; }
   const days = Math.floor(distance / (1000*60*60*24));
   const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
   const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
   const seconds = Math.floor((distance % (1000*60)) / 1000);
   countdown.innerHTML = `${days} Hari ${hours} Jam ${minutes} Minit ${seconds} Saat lagi`;
 }
-setInterval(updateCountdown, 1000);
+setInterval(updateCountdown,1000);
 updateCountdown();
 
-// AUDIO AUTO-PLAY
+// AUDIO
 const music = document.getElementById("bg-music");
-document.body.addEventListener("click", () => { music.play().catch(()=>{}); }, {once:true});
+document.body.addEventListener("click",()=>{ music.play().catch(()=>{}); }, {once:true});
 music.volume = 0.5;
 
-// PETAL ANIMATION
-const petalsContainer = document.getElementById("petals");
-function createPetal(){
-  const petal = document.createElement("div");
-  petal.classList.add("petal");
-  petal.style.left = Math.random()*100 + "vw";
-  petal.style.animationDuration = (5 + Math.random()*5) + "s";
-  petal.style.opacity = 0.5 + Math.random()*0.5;
-  const size = 25 + Math.random()*30;
-  petal.style.width = size + "px";
-  petal.style.height = size + "px";
-  petal.style.transform = `rotateX(${Math.random()*360}deg) rotateY(${Math.random()*360}deg)`;
-  petalsContainer.appendChild(petal);
-  setTimeout(()=>{ petal.remove(); }, 12000);
-}
-setInterval(createPetal, 200);
+// SLIDESHOW
+let slideIndex=0;
+const slides=document.querySelectorAll("#slideshow img");
+const dots=document.querySelectorAll(".dot");
+function showSlide(n){ slides.forEach(s=>s.classList.remove("active")); dots.forEach(d=>d.classList.remove("active")); slides[n].classList.add("active"); dots[n].classList.add("active"); }
+function nextSlide(){ slideIndex=(slideIndex+1)%slides.length; showSlide(slideIndex); }
+function prevSlide(){ slideIndex=(slideIndex-1+slides.length)%slides.length; showSlide(slideIndex); }
+document.querySelector(".next").addEventListener("click", nextSlide);
+document.querySelector(".prev").addEventListener("click", prevSlide);
+dots.forEach((d,i)=>d.addEventListener("click",()=>{ slideIndex=i; showSlide(slideIndex); }));
+setInterval(nextSlide,5000);
 
-// SCROLL GALERI
-const gallery = document.getElementById("scroll-gallery");
-let scrollPos = 0;
-function scrollGallery(){
-  scrollPos += 0.8;
-  if(scrollPos > gallery.scrollWidth - gallery.clientWidth) scrollPos = 0;
-  gallery.scrollTo({left:scrollPos, behavior:"smooth"});
-}
-setInterval(scrollGallery, 40);
+// SWIPE MOBILE
+let touchStartX=0;
+let touchEndX=0;
+const slideshow=document.getElementById("slideshow");
+slideshow.addEventListener('touchstart',e=>{ touchStartX=e.changedTouches[0].screenX; });
+slideshow.addEventListener('touchend',e=>{ touchEndX=e.changedTouches[0].screenX; if(touchEndX<touchStartX-50) nextSlide(); if(touchEndX>touchStartX+50) prevSlide(); });
 
-// OBSERVER UNTUK SECTION
+// SECTION OBSERVER
 document.querySelectorAll("section").forEach(el=>{
-  new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting) entry.target.classList.add("show");
-    });
-  }, {threshold:0.2}).observe(el);
+  new IntersectionObserver(entries=>{ entries.forEach(entry=>{ if(entry.isIntersecting) entry.target.classList.add("show"); }); }, {threshold:0.2}).observe(el);
 });
 
-// RSVP MODAL
-const rsvpBtn = document.createElement("button");
-rsvpBtn.textContent = "RSVP";
-rsvpBtn.style.position = "fixed";
-rsvpBtn.style.bottom = "20px";
-rsvpBtn.style.right = "20px";
-rsvpBtn.style.background = "#f4c542";
-rsvpBtn.style.padding = "12px 20px";
-rsvpBtn.style.border = "none";
-rsvpBtn.style.borderRadius = "50px";
-rsvpBtn.style.cursor = "pointer";
-rsvpBtn.style.zIndex = "100";
-document.body.appendChild(rsvpBtn);
-
-const rsvpModal = document.getElementById("rsvp-modal");
-rsvpBtn.addEventListener("click", ()=>{ rsvpModal.classList.add("show"); });
-rsvpModal.addEventListener("click", e=>{ if(e.target===rsvpModal) rsvpModal.classList.remove("show"); });
-
-document.getElementById("rsvp-form").addEventListener("submit", e=>{
-  e.preventDefault();
-  alert("Terima kasih! RSVP anda telah dihantar.");
-  rsvpModal.classList.remove("show");
-});
+// RSVP
+const rsvpBtn=document.createElement("button");
+rsvpBtn.textContent="RSVP";
+rsvpBtn.style.position="fixed"; rsvpBtn.style.bottom="20px"; rsvpBtn.style.right="20px";
+rsvpBtn.style.background="#f4c542"; rsvpBtn.style.padding="12px 20px"; rsvpBtn.style.border="none"; rsvpBtn.style.borderRadius="50px";
+rsvpBtn.style.cursor="pointer"; rsvpBtn.style.zIndex="100"; document.body.appendChild(rsvpBtn);
+const rsvpModal=document.getElementById("rsvp-modal");
+rsvpBtn.addEventListener("click",()=>{ rsvpModal.classList.add("show"); });
+rsvpModal.addEventListener("click",e=>{ if(e.target===rsvpModal) rsvpModal.classList.remove("show"); });
+document.getElementById("rsvp-form").addEventListener("submit",e=>{ e.preventDefault(); alert("Terima kasih! RSVP anda telah dihantar."); rsvpModal.classList.remove("show"); });
 </script>
 </body>
 </html>

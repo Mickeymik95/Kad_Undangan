@@ -3,36 +3,290 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kad Undangan Perkahwinan</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Kad Jemputan Kahwin</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #2c3e50;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .overlay {
+      background: rgba(255, 255, 255, 0.9);
+      min-height: 100vh;
+      padding: 30px 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      letter-spacing: 3px;
+      font-size: 22px;
+      margin-bottom: 15px;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 1s ease;
+    }
+
+    .initials {
+      font-size: 80px;
+      font-weight: bold;
+      color: #1e3a5f;
+      margin: 10px 0;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 1.2s ease;
+    }
+
+    .names {
+      font-size: 24px;
+      margin: 5px 0 20px;
+      color: #1e3a5f;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1.2s ease;
+    }
+
+    .date, .time-place, section, .countdown {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1.2s ease;
+    }
+
+    .countdown {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1e3a5f;
+      margin: 20px 0 40px;
+    }
+
+    section {
+      margin: 40px 0;
+    }
+
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    audio {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 350px;
+    }
+
+    /* Doa Pengantin dengan hiasan */
+    .doa {
+      margin-top: 40px;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      font-style: italic;
+      font-size: 18px;
+      line-height: 1.8;
+      color: #1e3a5f;
+      position: relative;
+      border: 4px solid transparent;
+      background-clip: padding-box;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .doa h2 {
+      margin-bottom: 15px;
+      font-size: 20px;
+      color: #2c3e50;
+    }
+
+    /* Ornamen hiasan di sudut */
+    .doa::before, .doa::after {
+      content: "";
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: url('ornament.png') no-repeat center;
+      background-size: contain;
+    }
+    .doa::before {
+      top: -20px;
+      left: -20px;
+    }
+    .doa::after {
+      bottom: -20px;
+      right: -20px;
+      transform: rotate(180deg);
+    }
+
+    /* Kelas aktif bila muncul */
+    .show {
+      opacity: 1 !important;
+      transform: translateY(0) scale(1) !important;
+    }
+
+    /* 🌐 MEDIA QUERY UNTUK RESPONSIVE */
+    @media (max-width: 768px) {
+      h1 { font-size: 18px; }
+      .initials { font-size: 60px; }
+      .names { font-size: 20px; }
+      .countdown { font-size: 16px; }
+      ul { font-size: 14px; }
+      .doa { font-size: 16px; padding: 15px; }
+      .doa::before, .doa::after { width: 40px; height: 40px; }
+    }
+
+    @media (max-width: 480px) {
+      .initials { font-size: 45px; }
+      .names { font-size: 18px; }
+      .date, .time-place { font-size: 14px; }
+      iframe { height: 200px; }
+      .doa { font-size: 14px; }
+    }
+
+    /* 🌸 ANIMASI BUNGA JATUH */
+    .petal {
+      position: fixed;
+      top: -10vh;
+      background-image: url('petal.png'); /* kelopak bunga png transparent */
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 25px;
+      height: 25px;
+      opacity: 0.8;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0.2;
+      }
+    }
+  </style>
 </head>
 <body>
-  <audio id="bg-music" autoplay loop>
-    <source src="music/romantic.mp3" type="audio/mpeg">
-  </audio>
+  <!-- Kelopak bunga -->
+  <div id="petals"></div>
 
-  <div class="lights-container"></div>
-  <div class="flowers-container"></div>
+  <div class="overlay">
+    <h1>MAJLIS PERKAHWINAN</h1>
+    <div class="initials">O & A</div>
+    <div class="names">Omar & Alia</div>
+    <div class="date">22 . 01 . 2025</div>
 
-  <div class="container">
-    <header>
-      <h1>Ahmad & Aisyah</h1>
-      <p>Dengan segala hormatnya menjemput anda ke majlis perkahwinan kami</p>
-    </header>
+    <!-- Countdown -->
+    <div class="countdown" id="countdown"></div>
 
-    <section class="details">
-      <p><strong>Tarikh:</strong> 20 Disember 2025</p>
-      <p><strong>Lokasi:</strong> Dewan Serbaguna, Kuala Lumpur</p>
-      <img src="images/ilustrasi.png" alt="Ilustrasi" class="illustration">
+    <div class="time-place">11.00AM – 4.00PM<br>Dewan Serbaguna</div>
+
+    <!-- Atur Cara Majlis -->
+    <section>
+      <h2>Atur Cara Majlis</h2>
+      <ul>
+        <li>11:00 AM – Ketibaan Tetamu</li>
+        <li>12:00 PM – Jamuan Bermula</li>
+        <li>2:00 PM – Sesi Bergambar</li>
+        <li>4:00 PM – Majlis Tamat</li>
+      </ul>
     </section>
 
-    <button id="rsvp-btn">RSVP Sekarang</button>
+    <!-- Peta Lokasi -->
+    <section>
+      <h2>Lokasi Majlis</h2>
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!...">
+      </iframe>
+    </section>
 
-    <footer>
-      <p>Terima kasih kerana hadir dan meraikan hari bahagia kami!</p>
-    </footer>
+    <!-- Muzik Latar -->
+    <section>
+      <h2>Muzik</h2>
+      <audio controls autoplay loop>
+        <source src="lagu.mp3" type="audio/mpeg">
+        Browser anda tidak menyokong audio.
+      </audio>
+    </section>
+
+    <!-- Doa Pengantin -->
+    <section class="doa">
+      <h2>Doa Pengantin</h2>
+      <p>
+        "Ya Allah, berkatilah majlis ini dengan keberkatan dari-Mu,  
+        limpahkanlah kasih sayang antara kedua mempelai ini,  
+        satukanlah mereka dalam kebaikan dan lindungilah mereka  
+        dari segala keburukan. Jadikanlah rumahtangga mereka  
+        sakinah, mawaddah, wa rahmah."
+      </p>
+      <p><strong>آمِيْن يَا رَبَّ الْعَالَمِيْن</strong></p>
+    </section>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Animasi bila elemen muncul
+    const elements = document.querySelectorAll("h1, .initials, .names, .date, .countdown, .time-place, section");
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    }, { threshold: 0.2 });
+    elements.forEach(el => observer.observe(el));
+
+    // Countdown Timer
+    const countdown = document.getElementById("countdown");
+    const weddingDate = new Date("Jan 22, 2025 11:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+
+      if (distance < 0) {
+        countdown.innerHTML = "Majlis telah bermula 🎉";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.innerHTML = `${days} Hari ${hours} Jam ${minutes} Minit ${seconds} Saat lagi`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // 🌸 Kelopak bunga jatuh
+    const petalsContainer = document.getElementById("petals");
+    function createPetal() {
+      const petal = document.createElement("div");
+      petal.classList.add("petal");
+      petal.style.left = Math.random() * 100 + "vw";
+      petal.style.animationDuration = 5 + Math.random() * 5 + "s"; // kelajuan berbeza
+      petal.style.opacity = Math.random();
+      petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+      petalsContainer.appendChild(petal);
+
+      setTimeout(() => { petal.remove(); }, 10000);
+    }
+    setInterval(createPetal, 400); // setiap 0.4s keluar kelopak baru
+  </script>
 </body>
 </html>

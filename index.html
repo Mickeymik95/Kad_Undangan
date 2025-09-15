@@ -5,42 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jemputan Majlis Perkahwinan Premium</title>
 <style>
-/* BODY & VIDEO BACKGROUND */
 body, html { margin:0; padding:0; width:100%; height:100%; font-family:'Georgia', serif; color:#1e3a5f; overflow-x:hidden; }
 #bg-video { position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-3; }
 .overlay { position:relative; z-index:2; backdrop-filter:blur(12px); background:rgba(255,255,255,0.25); min-height:100vh; padding:40px 20px; border-radius:25px; box-shadow:0 10px 30px rgba(0,0,0,0.2); text-align:center; }
-
-/* HEADER */
 h1, .initials, .names, .date, .countdown { opacity:0; transform:translateY(30px); transition: all 1s ease; }
 h1 { font-size:38px; margin-bottom:20px; letter-spacing:4px; font-weight:bold; }
 .initials { font-size:110px; font-weight:bold; margin:10px 0; }
 .names { font-size:36px; margin:5px 0 20px; font-weight:bold; }
 .date, .countdown { font-size:20px; margin:12px 0; font-weight:600; }
 .show{ opacity:1; transform:translateY(0); }
-
-/* SECTION */
 section{ margin:40px 0 0 0; padding:25px; background: rgba(255,255,255,0.35); border-radius:20px; box-shadow:0 5px 20px rgba(0,0,0,0.1); opacity:0; transform:translateY(20px); transition: all 1s ease; line-height:1.8; }
 ul { list-style:none; padding:0; font-size:17px; line-height:1.9; max-width:450px; margin:0 auto; text-align:left; }
-
-/* MODAL RSVP */
 #rsvp-modal{ position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; justify-content:center; align-items:center; z-index:200; opacity:0; pointer-events:none; transition: all 0.4s ease; }
 #rsvp-modal.show{ opacity:1; pointer-events:auto; }
 #rsvp-modal .modal-content{ background:white; padding:30px; border-radius:20px; text-align:left; max-width:400px; width:90%; transform: scale(0.7); transition: transform 0.4s ease; }
 #rsvp-modal.show .modal-content{ transform: scale(1); }
 #rsvp-modal label{ display:block; margin:10px 0 5px; font-weight:bold; }
 #rsvp-modal input, #rsvp-modal select{ width:100%; padding:8px; margin-bottom:15px; border-radius:5px; border:1px solid #ccc; }
-
-/* PETAL */
 .petal{ position: fixed; top:-10vh; background-image:url('petal.png'); background-size:contain; background-repeat:no-repeat; width:35px; height:35px; opacity:0.9; z-index:-2; animation:fall linear infinite, glitter 1.5s ease-in-out infinite alternate; }
 @keyframes fall{0%{transform:translateY(-10vh) rotateX(0deg) rotateY(0deg); opacity:1;}100%{transform:translateY(110vh) rotateX(360deg) rotateY(360deg); opacity:0.3;}}
 @keyframes glitter{0%{ box-shadow:0 0 0px rgba(255,255,255,0);}50%{ box-shadow:0 0 10px rgba(255,255,255,0.6);}100%{ box-shadow:0 0 0px rgba(255,255,255,0);}}
-
-/* GALERI PENGANTIN */
 .bride-groom-container{ overflow-x:hidden; white-space:nowrap; margin:30px 0; position:relative; }
 .bride-groom-container img{ height:200px; margin:0 10px; display:inline-block; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.15); transition: transform 0.5s ease; }
 .bride-groom-container img:hover{ transform: scale(1.05); }
-
-/* HUBUNGI KAMI */
 .contact{ margin:0; padding:25px; background: rgba(255,255,255,0.35); border-radius:20px; box-shadow:0 4px 12px rgba(0,0,0,0.08); font-size:18px; line-height:1.8; }
 .contact h2{ margin-bottom:15px; font-size:24px; color:#1e3a5f; }
 .contact p{ margin:5px 0; }
@@ -49,17 +36,14 @@ ul { list-style:none; padding:0; font-size:17px; line-height:1.9; max-width:450p
 </head>
 <body>
 
-<!-- VIDEO BACKGROUND -->
 <video id="bg-video" autoplay muted loop>
   <source src="bunga.mp4" type="video/mp4">
 </video>
 
-<!-- AUDIO -->
 <audio id="bg-music" loop>
   <source src="lagu.mp3" type="audio/mpeg">
 </audio>
 
-<!-- PETAL -->
 <div id="petals"></div>
 
 <div class="overlay">
@@ -97,10 +81,8 @@ ul { list-style:none; padding:0; font-size:17px; line-height:1.9; max-width:450p
     <p>WhatsApp: <a href="https://wa.me/60149236577" target="_blank">Mik</a></p>
     <p>WhatsApp: <a href="https://wa.me/60166234337" target="_blank">Fazrinah</a></p>
   </section>
-
 </div>
 
-<!-- MODAL RSVP -->
 <div id="rsvp-modal">
   <div class="modal-content">
     <h2>RSVP Jemputan</h2>
@@ -128,15 +110,18 @@ const countdown = document.getElementById("countdown");
 const weddingDate = new Date("Jan 22, 2025 11:00:00").getTime();
 function updateCountdown(){
   const now = new Date().getTime();
-  const distance = weddingDate-now;
-  if(distance<0){ countdown if(distance<0){ countdown.innerHTML="Majlis telah bermula 🎉"; return; }
-  const days=Math.floor(distance/(1000*60*60*24));
-  const hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-  const minutes=Math.floor((distance%(1000*60*60))/(1000*60));
-  const seconds=Math.floor((distance%(1000*60))/1000);
+  const distance = weddingDate - now;
+  if(distance < 0){
+    countdown.innerHTML = "Majlis telah bermula 🎉";
+    return;
+  }
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
   countdown.innerHTML = `${days} Hari ${hours} Jam ${minutes} Minit ${seconds} Saat lagi`;
 }
-setInterval(updateCountdown,1000);
+setInterval(updateCountdown, 1000);
 updateCountdown();
 
 // AUDIO AUTO-PLAY
@@ -147,7 +132,7 @@ music.volume = 0.5;
 // PETAL ANIMATION
 const petalsContainer = document.getElementById("petals");
 function createPetal(){
-  const petal=document.createElement("div");
+  const petal = document.createElement("div");
   petal.classList.add("petal");
   petal.style.left = Math.random()*100 + "vw";
   petal.style.animationDuration = (5 + Math.random()*5) + "s";
@@ -157,19 +142,19 @@ function createPetal(){
   petal.style.height = size + "px";
   petal.style.transform = `rotateX(${Math.random()*360}deg) rotateY(${Math.random()*360}deg)`;
   petalsContainer.appendChild(petal);
-  setTimeout(()=>{petal.remove();},12000);
+  setTimeout(()=>{ petal.remove(); }, 12000);
 }
-setInterval(createPetal,200);
+setInterval(createPetal, 200);
 
 // SCROLL GALERI
 const gallery = document.getElementById("scroll-gallery");
-let scrollPos=0;
+let scrollPos = 0;
 function scrollGallery(){
-  scrollPos+=0.8;
-  if(scrollPos>gallery.scrollWidth-gallery.clientWidth) scrollPos=0;
-  gallery.scrollTo({left:scrollPos,behavior:"smooth"});
+  scrollPos += 0.8;
+  if(scrollPos > gallery.scrollWidth - gallery.clientWidth) scrollPos = 0;
+  gallery.scrollTo({left:scrollPos, behavior:"smooth"});
 }
-setInterval(scrollGallery,40);
+setInterval(scrollGallery, 40);
 
 // OBSERVER UNTUK SECTION
 document.querySelectorAll("section").forEach(el=>{
@@ -177,27 +162,28 @@ document.querySelectorAll("section").forEach(el=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting) entry.target.classList.add("show");
     });
-  },{threshold:0.2}).observe(el);
+  }, {threshold:0.2}).observe(el);
 });
 
 // RSVP MODAL
-const rsvpBtn=document.createElement("button");
-rsvpBtn.textContent="RSVP";
-rsvpBtn.style.position="fixed";
-rsvpBtn.style.bottom="20px";
-rsvpBtn.style.right="20px";
-rsvpBtn.style.background="#f4c542";
-rsvpBtn.style.padding="12px 20px";
-rsvpBtn.style.border="none";
-rsvpBtn.style.borderRadius="50px";
-rsvpBtn.style.cursor="pointer";
-rsvpBtn.style.zIndex="100";
+const rsvpBtn = document.createElement("button");
+rsvpBtn.textContent = "RSVP";
+rsvpBtn.style.position = "fixed";
+rsvpBtn.style.bottom = "20px";
+rsvpBtn.style.right = "20px";
+rsvpBtn.style.background = "#f4c542";
+rsvpBtn.style.padding = "12px 20px";
+rsvpBtn.style.border = "none";
+rsvpBtn.style.borderRadius = "50px";
+rsvpBtn.style.cursor = "pointer";
+rsvpBtn.style.zIndex = "100";
 document.body.appendChild(rsvpBtn);
 
 const rsvpModal = document.getElementById("rsvp-modal");
-rsvpBtn.addEventListener("click",()=>{rsvpModal.classList.add("show");});
-rsvpModal.addEventListener("click",e=>{if(e.target===rsvpModal) rsvpModal.classList.remove("show");});
-document.getElementById("rsvp-form").addEventListener("submit",e=>{
+rsvpBtn.addEventListener("click", ()=>{ rsvpModal.classList.add("show"); });
+rsvpModal.addEventListener("click", e=>{ if(e.target===rsvpModal) rsvpModal.classList.remove("show"); });
+
+document.getElementById("rsvp-form").addEventListener("submit", e=>{
   e.preventDefault();
   alert("Terima kasih! RSVP anda telah dihantar.");
   rsvpModal.classList.remove("show");

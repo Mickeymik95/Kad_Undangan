@@ -14,13 +14,16 @@
   overflow-x: hidden;
 }
 
-    .overlay {
-      background: rgba(255, 255, 255, 0.9);
-      min-height: 100vh;
-      padding: 30px 20px;
-      position: relative;
-      z-index: 2;
-    }
+   .overlay {
+  background: rgba(255, 255, 255, 0.3); /* putih separa lutsinar */
+  backdrop-filter: blur(10px);          /* beri kesan kabur di belakang */
+  min-height: 100vh;
+  padding: 30px 20px;
+  position: relative;
+  z-index: 2;
+  border-radius: 20px;                  /* sudut lembut */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* bayang halus */
+}
 
     h1 {
       letter-spacing: 3px;

@@ -214,13 +214,14 @@
     </section>
 
     <!-- Muzik Latar -->
-    <section>
-      <h2>Muzik</h2>
-      <audio controls autoplay loop>
-        <source src="lagu.mp3" type="audio/mpeg">
-        Browser anda tidak menyokong audio.
-      </audio>
-    </section>
+<section>
+  <h2>Muzik</h2>
+  <audio id="bg-music" loop>
+    <source src="lagu.mp3" type="audio/mpeg">
+    Browser anda tidak menyokong audio.
+  </audio>
+  <p><em>Sentuh skrin sekali untuk mainkan lagu 🎵</em></p>
+</section>
 
     <!-- Doa Pengantin -->
     <section class="doa">
@@ -286,6 +287,12 @@
       setTimeout(() => { petal.remove(); }, 10000);
     }
     setInterval(createPetal, 400); // setiap 0.4s keluar kelopak baru
+// 🎵 Mainkan muzik selepas user sentuh/klik skrin
+const music = document.getElementById("bg-music");
+
+document.body.addEventListener("click", () => {
+  music.play().catch(err => console.log("Autoplay disekat:", err));
+}, { once: true });
   </script>
 </body>
 </html>

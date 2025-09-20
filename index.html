@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Kalendar & Gaji Interaktif</title>
+  <title>Kalendar & Gaji Interaktif Mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: Arial, sans-serif; font-size: 14px; margin: 10px; background: #f5f5f5; }
-    h3 { text-align: center; color: #333; margin-bottom: 10px;}
-    table { border-collapse: collapse; width: 100%; margin-bottom: 20px; text-align: center; }
-    th { border: 1px solid #ccc; padding: 4px; font-size: 12px; height: 30px; background: #e0e0e0; border-radius: 4px; }
+    body { font-family: Arial, sans-serif; font-size: 14px; margin: 5px; background: #f5f5f5; }
+    h3 { text-align: center; color: #333; margin-bottom: 10px; font-size:16px; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 15px; text-align: center; }
+    th { border: 1px solid #ccc; padding: 6px; font-size: 12px; height: 30px; background: #e0e0e0; border-radius: 4px; }
     td { 
       border: 1px solid #ccc; 
       width: 14%; 
-      height: 70px; 
+      min-width: 40px;
+      min-height: 70px;
       position: relative;
       background-color: #f0f0f0; 
       transition: all 0.2s ease;
       border-radius: 6px;
       box-shadow: 1px 2px 4px rgba(0,0,0,0.1);
-      vertical-align: top;
-      cursor: pointer;
-      font-size: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 2px;
     }
-    td:hover { transform: translateY(-4px); box-shadow: 3px 6px 10px rgba(0,0,0,0.2); }
+    td:hover { transform: translateY(-2px); box-shadow: 3px 6px 10px rgba(0,0,0,0.2); }
 
-    .date { font-weight: bold; font-size: 10px; margin-bottom: 2px; }
+    .date { font-weight: bold; font-size: 12px; margin-bottom: 2px; }
 
     .menu { 
       display: none; 
@@ -34,13 +36,13 @@
       background: #fff; 
       border: 1px solid #aaa; 
       z-index: 100; 
-      font-size: 13px;
+      font-size: 14px;
       padding: 4px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       border-radius: 6px;
-      min-width: 110px;
+      min-width: 120px;
     }
-    .menu div { padding: 4px; cursor: pointer; border-radius: 4px; transition: background 0.2s; }
+    .menu div { padding: 8px; cursor: pointer; border-radius: 4px; transition: background 0.2s; font-size:14px; }
     .menu div:hover { background: #f0f0f0; }
 
     /* Warna pilihan */
@@ -50,12 +52,19 @@
     .KERJA_OD { background-color: #4caf50; color:white; } 
     .RD { background-color: #2196f3; color:white; }     
     .PH { background-color: #9c27b0; color:white; }     
-    .OT_EXTRA { background-color: #ff9800; color:white; font-weight:bold; font-size:12px; }
+    .OT_EXTRA { background-color: #ff9800; color:white; font-weight:bold; font-size:14px; }
 
     .output { margin-top: 10px; font-size: 14px; background: #fff; padding: 10px; border-radius: 6px; box-shadow: 1px 2px 4px rgba(0,0,0,0.15); }
     .output span { font-weight: bold; color: #1565c0; }
-    input { width: 80px; padding: 2px; margin-right: 5px; font-size:12px; text-align:center; }
-    .ot-input { width: 40px; font-size:12px; padding: 1px; margin-top:2px; text-align:center; }
+    input { width: 80px; padding: 4px; margin-right: 5px; font-size:14px; text-align:center; }
+    .ot-input { width: 50px; font-size:14px; padding: 2px; margin-top:2px; text-align:center; }
+
+    @media screen and (max-width: 480px){
+      td { min-height: 90px; font-size:16px; }
+      .menu div { font-size:16px; padding:10px; }
+      input { width: 100px; font-size:16px; padding:4px; }
+      .ot-input { width: 60px; font-size:16px; padding:3px; }
+    }
   </style>
 </head>
 <body>
@@ -99,8 +108,8 @@ for(let i=0;i<startDay;i++) row.appendChild(document.createElement("td"));
 for(let d=1; d<=daysInMonth; d++){
   let cell = document.createElement("td");
   let span = document.createElement("span");
-  span.textContent = d;
-  span.className = "date";
+  span.className="date";
+  span.innerHTML = d;
   cell.appendChild(span);
 
   // menu
@@ -113,24 +122,26 @@ for(let d=1; d<=daysInMonth; d++){
       cell.setAttribute("data-choice",c);
       choices.forEach(ch=>cell.classList.remove(ch));
       cell.classList.add(c);
-      span.textContent=d+"\n"+c.replace("_"," ");
+      span.innerHTML=d+"<br>"+c.replace("_"," ");
 
       // OT EXTRA input inline
       if(c==="OT_EXTRA"){
-        let input = document.createElement("input");
-        input.type="number";
-        input.min="0";
-        input.value=0;
-        input.className="ot-input";
-        input.addEventListener("input", ()=>kiraGaji());
-        cell.appendChild(input);
+        if(!cell.querySelector(".ot-input")){
+          let input = document.createElement("input");
+          input.type="number"; input.min="0"; input.value=0;
+          input.className="ot-input";
+          input.addEventListener("input", ()=>kiraGaji());
+          cell.appendChild(input);
+        }
       } else {
         let old = cell.querySelector(".ot-input");
         if(old) old.remove();
       }
+
       menu.style.display="none";
       kiraGaji();
     });
+    menu.addEventListener("click", e=>e.stopPropagation());
     menu.appendChild(item);
   });
   cell.appendChild(menu);
@@ -139,7 +150,7 @@ for(let d=1; d<=daysInMonth; d++){
     document.querySelectorAll(".menu").forEach(m=>m.style.display="none");
     menu.style.display="block";
     menu.style.left="0px";
-    menu.style.top="20px";
+    menu.style.top="25px";
   });
 
   row.appendChild(cell);
@@ -154,7 +165,6 @@ calendarDiv.appendChild(table);
 function kiraGaji(){
   let basic=parseFloat(document.getElementById("basic").value)||0;
   let elaunDobi=parseFloat(document.getElementById("elaunDobi").value)||0;
-
   let elaunSyif=0, otNormal=0, phTotal=0, kerjaOD=0, otExtra=0;
 
   document.querySelectorAll("td").forEach(cell=>{
@@ -178,17 +188,26 @@ function kiraGaji(){
   });
 
   let gajiKasar=basic+elaunDobi+elaunSyif+otNormal+phTotal+kerjaOD+otExtra;
-
   document.getElementById("elaunSyif").textContent=elaunSyif.toFixed(2);
   document.getElementById("otNormal").textContent=otNormal.toFixed(2);
   document.getElementById("phTotal").textContent=phTotal.toFixed(2);
   document.getElementById("kerjaOD").textContent=kerjaOD.toFixed(2);
   document.getElementById("otExtra").textContent=otExtra.toFixed(2);
-  document.getElementById("gajiKasar").textContent=gajiKasar.toFixed(2);
+
+document.getElementById("gajiKasar").textContent=gajiKasar.toFixed(2);
 }
 
+// Event listener untuk input basic dan elaun dobi
 document.getElementById("basic").addEventListener("input", kiraGaji);
 document.getElementById("elaunDobi").addEventListener("input", kiraGaji);
+
+// Tutup menu bila klik di luar
+document.addEventListener("click", ()=> {
+  document.querySelectorAll(".menu").forEach(m=>m.style.display="none");
+});
+
+// Kiraan awal supaya paparan tidak kosong
+kiraGaji();
 </script>
 
 </body>
